@@ -118,13 +118,13 @@ def swamp(player):
         return swamp(player)
     
 def combat(player, enemy_health, enemy_damage, enemy_name):
-    type_print(f"You encounter an {enemy_name}.")
-    type_print(f"it has {enemy_health} health!")
+    type_print(f"You encounter a {enemy_name}.")
+    type_print(f"They/It has {enemy_health} health!")
     while enemy_health > 0 and player["health"] > 0:
-        choice = input_type("Would you like to A.) Attack or B.) Flee?").strip().upper()
+        choice = input_type("Would you like to A.) Attack or B.) Flee? ").strip().upper()
         if choice == "A":
             enemy_health -= player["damage"]
-            type_print(f"you did {player['damage']} damage!")
+            type_print(f"you did {player['damage']} damage! They/it has {enemy_health} left!")
             if enemy_health > 0:
                 player["health"] -= enemy_damage
                 type_print(f"The {enemy_name} did {enemy_damage} damage! You have {player['health']} health left!" )
@@ -135,7 +135,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name):
             type_print("Please choose A or B")
     if enemy_health <= 0:
         type_print("YOU WON!")
-        return choose_a_path()
+        return choose_a_path(player)
     elif player["health"] <= 0:
         type_print("You lost LOL")
         return start_game()
