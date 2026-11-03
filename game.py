@@ -18,6 +18,8 @@ def input_type(text, delay = 0.03):
 type_print("\n\nHi, welcome to my text based Adventure Game!")
 type_print("\n\nHope you have fun!\n\n")
     
+
+    
 def get_name():
     player_name = input_type("What would you like to be called Adventurer? ")
     print("\n")
@@ -58,14 +60,14 @@ def choose_a_path():
         os.system('cls')
         return dark_forest()
     elif path == "C":
-        os.system()
-        return swamp
+        os.system('cls')
+        return swamp()
     else:
         os.system('cls')
         type_print("Please choose A, B, or C")
         
         return choose_a_path()
-    os.system('cls')
+
 
 def shimmering_city():
     os.system('cls')
@@ -80,7 +82,7 @@ def shimmering_city():
     elif guards == "C":
         os.system('cls')
         print("you got instantly obliterated.")
-        return play_beginning()
+        return start_game()
     else:
         type_print("please enter a proper difficulty.")
         return shimmering_city()
@@ -99,10 +101,10 @@ def swamp():
         witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up?").upper()
         if witch == "A":
             type_print("You tried to kill her, but failed as she suddenly rolled over. This woke her up. You died.")
-            return play_beginning
+            return start_game()
         elif witch == "B":
             print("You really scared her as shes used to solitude. You died.")
-            return play_beginning()
+            return start_game()
     elif path == "B":
         return shimmering_city()
     else:
@@ -110,11 +112,11 @@ def swamp():
         return swamp()
     
     
+def start_game():
+    player_name = get_name()
+    player_health, player_damage = play_beginning()
+    type_print("\nWelcome" + player_name + "!")
+    type_print(f"Your starting health is {player_health} and your starting damage is {player_damage}.")
+    choose_a_path()
 
-
-
-player_name = get_name()
-player_health, player_damage = play_beginning()
-print("\nWelcome, " + player_name + "!")
-print(f"Your starting health is {player_health} and your starting damage is {player_damage}.")
-choose_a_path()
+start_game()
