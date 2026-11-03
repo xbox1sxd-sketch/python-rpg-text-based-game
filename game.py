@@ -20,11 +20,15 @@ type_print("\n\nHope you have fun!\n\n")
     
 
 def get_name():
-    player_name = input_type("What would you like to be called Adventurer? ")
+    player_name = input_type("What would you like to be called Adventurer? ").strip()
+    if player_name == "":
+        type_print("not a valid name")
+        os.system('cls')
+        return get_name()
     print("\n")
     type_print("Ah " + player_name + " What an excellent name.")
-
     return player_name
+
 
 def play_beginning():
     print("\n")
@@ -33,15 +37,15 @@ def play_beginning():
     if difficulty == "medium":
         type_print("Indeed the path you chosen is a simple one.")
         health = 150
-        damage = 3
+        damage = 7
     elif difficulty == "easy":
         type_print("\nIndeed the path you have chosen is a forgiving one.")
         health = 200
-        damage = 5
+        damage = 10
     elif difficulty == "hard":
         type_print("Indeed the path you have chosen is a hard one.")
         health = 75
-        damage = 1
+        damage = 5
     else:
         os.system('cls')
         type_print("Please enter a proper difficulty.")
@@ -80,16 +84,9 @@ def shimmering_city(player):
         type_print("Somehow, this managed to work. You are now inside the city.")
     elif guards == "C":
         os.system('cls')
-        type_print("The guard attack you!.")
-        player["health"] -= 25
-        type_print("you lost 25 health!")
-        type_print(f"Remaining health {player['health']}")
-        if player["health"] <= 0:
-            type_print("You died.")
-            return start_game()
-        return choose_a_path(player)
+        combat(player, 30, 5, "guard")
     else:
-        type_print("please enter a proper difficulty.")
+        type_print("please enter A. B. or C.")
         return shimmering_city(player)
 
 def dark_forest(player):
@@ -121,7 +118,8 @@ def swamp(player):
         return swamp(player)
     
 def combat(player, enemy_health, enemy_damage, enemy_name):
-    type_print(f"You encounter an {enemy_name} it has {enemy_health}  health!")
+    type_print(f"You encounter an {enemy_name}.")
+    type_print(f"it has {enemy_health} health!")
     while enemy_health > 0 and player["health"] > 0:
         choice = input_type("Would you like to A.) Attack or B.) Flee?").strip().upper()
         if choice == "A":
@@ -135,10 +133,10 @@ def combat(player, enemy_health, enemy_damage, enemy_name):
             return choose_a_path(player)
         else:
             type_print("Please choose A or B")
-    if enemy_health <0:
+    if enemy_health <= 0:
         type_print("YOU WON!")
         return choose_a_path()
-    elif player["health"] <0:
+    elif player["health"] <= 0:
         type_print("You lost LOL")
         return start_game()
         
