@@ -103,8 +103,12 @@ def swamp():
             type_print("You tried to kill her, but failed as she suddenly rolled over. This woke her up. You died.")
             return start_game()
         elif witch == "B":
-            print("You really scared her as shes used to solitude. You died.")
+            type_print("You really scared her as shes used to solitude. You died.")
             return start_game()
+        else:
+            type_print("Please type A or B.")
+            return swamp()
+            
     elif path == "B":
         return shimmering_city()
     else:
