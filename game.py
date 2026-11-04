@@ -1,14 +1,27 @@
 
+import msvcrt
 import os
+import random
 import time
 
 
+#used ai for type_print function, and for msvcrt
 def type_print(text, delay = 0.03):
-    for letter in text:
+    for i, letter in enumerate(text):
+        if msvcrt.kbhit():
+            key = msvcrt.getch()
+            if key == b'\r':
+                print(text[i:], end="", flush=True)
+                break
         print(letter, end="", flush=True)
         time.sleep(delay)
     print()
-    
+    while msvcrt.kbhit():
+        key = msvcrt.getch()
+        if key == b'\r':
+            continue
+
+
 def input_type(text, delay = 0.03):
     for letter in text:
         print(letter, end="", flush=True)
@@ -90,11 +103,16 @@ def shimmering_city(player):
         return shimmering_city(player)
 
 def dark_forest(player):
-    type_print("You slowly make your way to the forest... Then the sound of an owl scares the hell out of you. ")
-    time.sleep(0.5)
-    type_print("You turn back.")
-    time.sleep(0.5)
-    os.system('cls')
+    encounter = random.randint(1, 10)
+    if 1 <= encounter <= 6:
+        type_print("A wolf approaches you!")
+        return combat(player, 25, 5, "wolf")
+    elif 7 <= encounter <= 9:
+        type_print("A goblin approaches you!")
+        return combat(player, 50, 8, "goblin")
+    else:
+        type_print("WOW! you discover a treasure chest!")
+        type_print("unfortunately you don't know how to open it yet...")
     return choose_a_path(player)
 
 def swamp(player):
@@ -103,9 +121,11 @@ def swamp(player):
         witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up?").upper()
         if witch == "A":
             type_print("You tried to kill her, but failed as she suddenly rolled over. This woke her up. You died.")
+            os.system('cls')
             return start_game()
         elif witch == "B":
-            type_print("You really scared her as shes used to solitude. You died.")
+            type_print("You really scared her as shes used to being alone. You died.")
+            os.system('cls')
             return start_game()
         else:
             type_print("Please type A or B.")
@@ -124,7 +144,8 @@ def combat(player, enemy_health, enemy_damage, enemy_name):
         choice = input_type("Would you like to A.) Attack or B.) Flee? ").strip().upper()
         if choice == "A":
             enemy_health -= player["damage"]
-            type_print(f"you did {player['damage']} damage! They/it has {enemy_health} left!")
+            type_print(f"you did {player['damage']} damage!")
+            type_print(f"It has {enemy_health} health left!")
             if enemy_health > 0:
                 player["health"] -= enemy_damage
                 type_print(f"The {enemy_name} did {enemy_damage} damage! You have {player['health']} health left!" )
