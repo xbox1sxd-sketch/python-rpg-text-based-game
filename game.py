@@ -35,8 +35,8 @@ def input_type(text, delay=0.03):
     return input()
 
 
-type_print("\n\nHi, welcome to my text based Adventure Game!")
-type_print("\n\nHope you have fun!\n\n")
+type_print("\n\n Welcome to my text based Adventure Game!")
+type_print("\n\n I hope you enjoy!\n\n")
     
 
 def get_name():
@@ -146,16 +146,17 @@ def swamp(player):
     
 def combat(player, enemy_health, enemy_damage, enemy_name):
     type_print(f"You encounter a {enemy_name}.")
-    type_print(f"They/It has {enemy_health} health!")
+    type_print(f"It has {enemy_health} health!")
     while enemy_health > 0 and player["health"] > 0:
         choice = input_type("Would you like to A.) Attack or B.) Flee? ").strip().upper()
         if choice == "A":
             enemy_health -= player["damage"]
             type_print(f"you did {player['damage']} damage!")
             type_print(f"It has {enemy_health} health left!")
+            damage_dealt = random.randint(enemy_damage - 2, enemy_damage + 2)
             if enemy_health > 0:
-                player["health"] -= enemy_damage
-                type_print(f"The {enemy_name} did {enemy_damage} damage! You have {player['health']} health left!" )
+                player["health"] -= damage_dealt
+                type_print(f"The {enemy_name} did {damage_dealt} damage! You have {player['health']} health left!" )
         elif choice == "B":
             type_print("You scream and run away")
             return choose_a_path(player)
@@ -168,7 +169,18 @@ def combat(player, enemy_health, enemy_damage, enemy_name):
         type_print("You lost LOL")
         return start_game()
         
-    
+def show_inventory(player):
+    type_print("\n --- INVENTORY ---")
+    if player["inventory"] == []:
+        type_print("Your pack is empty.")
+    else:
+        for item in player["inventory"]:
+            type_print(" -" + item)
+        type_print("\n Gold:" + str(player["gold"]))
+        type_print("Health: " + str(player["Health"])) + "/" + str(player["max_health"])
+
+
+
 def start_game():
     player_name = get_name()
     player_health, player_damage = play_beginning()
@@ -176,7 +188,9 @@ def start_game():
     "name": player_name,
     "damage": player_damage,
     "health": player_health,
-    "inventory": []
+    "max_health": player_health,
+    "inventory": [],
+    "gold": 0,
     }   
     type_print(f"\nWelcome {player_name}!")
     type_print(f"Your starting health is {player_health} and your starting damage is {player_damage}.")
