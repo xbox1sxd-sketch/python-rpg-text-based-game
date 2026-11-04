@@ -18,16 +18,23 @@ def type_print(text, delay = 0.03):
     print()
     while msvcrt.kbhit():
         key = msvcrt.getch()
-        if key == b'\r':
-            continue
 
 
-def input_type(text, delay = 0.03):
-    for letter in text:
+def input_type(text, delay=0.03):
+    for i, letter in enumerate(text):
+        if msvcrt.kbhit():
+            key = msvcrt.getch()
+
+            if key == b'\r':
+                print(text[i:], end="", flush=True)
+                break
+
         print(letter, end="", flush=True)
         time.sleep(delay)
+
     return input()
-    
+
+
 type_print("\n\nHi, welcome to my text based Adventure Game!")
 type_print("\n\nHope you have fun!\n\n")
     
