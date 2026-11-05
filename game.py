@@ -110,6 +110,7 @@ def shimmering_city(player):
     elif guards == "B":
         os.system('cls')
         type_print("Somehow, this managed to work. You are now inside the city.")
+        return inside_city(player)
     elif guards == "C":
         os.system('cls')
         combat(player, 30, 5, "guard")
