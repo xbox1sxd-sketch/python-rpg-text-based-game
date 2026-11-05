@@ -89,6 +89,10 @@ def choose_a_path(player):
         os.system('cls')
         show_inventory(player)
         return choose_a_path(player)
+    elif path == "P":
+        os.system('cls')
+        use_potion(player)
+        return choose_a_path(player)
     else:
         os.system('cls')
         type_print("Please choose A, B, or C")
@@ -190,10 +194,10 @@ def show_inventory(player):
     else:
         for item in player["inventory"]:
             type_print(" -" + item)
-        type_print(f"\n Gold: {player['gold']}")
-        type_print(f"Health: {player['health']}/{player['max_health']}")
-        input_type("Press Enter to continue")
-        os.system('cls')
+    type_print(f"\n Gold: {player['gold']}")
+    type_print(f"Health: {player['health']}/{player['max_health']}")
+    input_type("Press Enter to continue")
+    os.system('cls')
         
 def use_potion(player):
     if "Health Potion" not in player["inventory"]:
