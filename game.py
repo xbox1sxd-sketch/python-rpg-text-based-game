@@ -75,7 +75,7 @@ def play_beginning():
     return health, damage
 
 def choose_a_path(player):
-    path = input_type("\nNow, where would you like to go? A: A shimmering city. B: A dark forest. C: Through the swamp. ").upper()
+    path = input_type("\nNow, where would you like to go? A: A shimmering city. B: A dark forest. C: Through the swamp. I: Inventory ").upper()
     if path == "A":
         os.system('cls')
         return shimmering_city(player)
@@ -85,6 +85,10 @@ def choose_a_path(player):
     elif path == "C":
         os.system('cls')
         return swamp(player)
+    elif path == "I":
+        os.system('cls')
+        show_inventory(player)
+        return choose_a_path(player)
     else:
         os.system('cls')
         type_print("Please choose A, B, or C")
@@ -118,8 +122,8 @@ def dark_forest(player):
         type_print("A goblin approaches you!")
         return combat(player, 50, 8, "goblin")
     else:
-        type_print("WOW! you discover a treasure chest!")
-        type_print("unfortunately you don't know how to open it yet...")
+        type_print("You discover a treasure chest! How rare!")
+        open_chest(player)
     return choose_a_path(player)
 
 def swamp(player):
@@ -148,7 +152,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name):
     type_print(f"You encounter a {enemy_name}.")
     type_print(f"It has {enemy_health} health!")
     while enemy_health > 0 and player["health"] > 0:
-        choice = input_type("Would you like to A.) Attack or B.) Flee? ").strip().upper()
+        choice = input_type("Would you like to A.) Attack or B.) Flee C.) Use a Potion ").strip().upper()
         if choice == "A":
             enemy_health -= player["damage"]
             type_print(f"you did {player['damage']} damage!")
@@ -160,15 +164,25 @@ def combat(player, enemy_health, enemy_damage, enemy_name):
         elif choice == "B":
             type_print("You scream and run away")
             return choose_a_path(player)
+        elif choice == "C":
+            if use_potion(player) == False:
+                type_print("You fumble in your pack and waste your turn :sob:")
         else:
             type_print("Please choose A or B")
     if enemy_health <= 0:
         type_print("YOU WON!")
+        enemy_drop(player, enemy_name)
         return choose_a_path(player)
     elif player["health"] <= 0:
         type_print("You lost LOL")
         return start_game()
         
+def enemy_drop(player, enemy_name):
+    roll = random.randint(1, 100)
+    if roll <= 35:
+        type_print(f"The {enemy_name} was holding something...")
+        pickup(player, "Health Potion")
+
 def show_inventory(player):
     type_print("\n --- INVENTORY ---")
     if player["inventory"] == []:
@@ -176,11 +190,44 @@ def show_inventory(player):
     else:
         for item in player["inventory"]:
             type_print(" -" + item)
-        type_print("\n Gold:" + str(player["gold"]))
-        type_print("Health: " + str(player["Health"])) + "/" + str(player["max_health"])
-
-
-
+        type_print(f"\n Gold: {player['gold']}")
+        type_print(f"Health: {player['health']}/{player['max_health']}")
+        input_type("Press Enter to continue")
+        os.system('cls')
+        
+def use_potion(player):
+    if "Health Potion" not in player["inventory"]:
+        type_print("You dig around in your pack... No potions. :(")
+        return False
+    if player["health"] >= player["max_health"]:
+        type_print("You're already at full health.")
+        return False
+    player["inventory"].remove("Health Potion")
+    old_health = player["health"]
+    player["health"] += 50
+    if player["health"] > player["max_health"]:  # noqa: PLR1730
+        player["health"] = player["max_health"]
+    type_print(f"You heal {player['health'] - old_health} health")
+    type_print(f"Health: {player['health']}/{player['max_health']}")
+    return True    
+    
+def pickup(player, item):
+    player["inventory"].append(item)
+    type_print("you got a " + item + "!")
+    
+def open_chest(player):
+    type_print("you open the chest")
+    gold_found = random.randint(5, 20)
+    player["gold"] += gold_found
+    type_print("You find" + str(gold_found) + "gold!")
+    roll = random.randint(1, 100)
+    if roll <= 55:
+        pickup(player, "Health Potion")
+    elif roll <= 80:
+        pickup(player, "Silver Scyth3")
+    else:
+        type_print("... and nothing else. Somebody else got here first!")
+    
 def start_game():
     player_name = get_name()
     player_health, player_damage = play_beginning()
