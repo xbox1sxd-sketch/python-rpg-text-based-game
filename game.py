@@ -113,7 +113,7 @@ def shimmering_city(player):
         return inside_city(player)
     elif guards == "C":
         os.system('cls')
-        combat(player, 30, 5, "guard")
+        return combat(player, 30, 5, "guard", "city")
     else:
         type_print("please enter A. B. or C.")
         return shimmering_city(player)
@@ -172,7 +172,7 @@ def inside_city(player):
         os.system('cls')
         return inside_city(player)
 
-def combat(player, enemy_health, enemy_damage, enemy_name):
+def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
     type_print(f"You encounter a {enemy_name}.")
     type_print(f"It has {enemy_health} health!")
     while enemy_health > 0 and player["health"] > 0:
@@ -192,10 +192,12 @@ def combat(player, enemy_health, enemy_damage, enemy_name):
             if use_potion(player) == False:
                 type_print("You fumble in your pack and waste your turn :sob:")
         else:
-            type_print("Please choose A or B")
+            type_print("Please choose A, B or C")
     if enemy_health <= 0:
         type_print("YOU WON!")
         enemy_drop(player, enemy_name)
+        if next == "city":
+            return inside_city(player)
         return choose_a_path(player)
     elif player["health"] <= 0:
         type_print("You lost LOL")
@@ -243,12 +245,12 @@ def open_chest(player):
     type_print("you open the chest")
     gold_found = random.randint(5, 20)
     player["gold"] += gold_found
-    type_print("You find" + str(gold_found) + "gold!")
+    type_print(f"You find {gold_found} gold!")
     roll = random.randint(1, 100)
     if roll <= 55:
         pickup(player, "Health Potion")
     elif roll <= 80:
-        pickup(player, "Silver Scyth3")
+        pickup(player, "Silver Scythe")
     else:
         type_print("... and nothing else. Somebody else got here first!")
     
