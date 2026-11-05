@@ -151,7 +151,26 @@ def swamp(player):
     else:
         type_print("Please say A, or B")
         return swamp(player)
-    
+
+def inside_city(player):
+    os.system('cls')
+    type_print("You now sneak past the gates into the shimmering city")
+    type_print("It is beautiful, unlike any city you have ever seen.")
+    choice = input_type("What do you do? A.) Look for the blacksmith. B.) Wander around. C. Leave").upper().strip()
+    if choice == "A":
+        os.system('cls')
+        return shop(player)
+    elif choice == "B":
+        os.system('cls')
+        return wander_streets(player)
+    elif choice == "C":
+        os.system('cls')
+        return choose_a_path(player)
+    else:
+        type_print("please enter A, B, OR C")
+        os.system('cls')
+        return inside_city(player)
+
 def combat(player, enemy_health, enemy_damage, enemy_name):
     type_print(f"You encounter a {enemy_name}.")
     type_print(f"It has {enemy_health} health!")
@@ -198,7 +217,7 @@ def show_inventory(player):
     type_print(f"Health: {player['health']}/{player['max_health']}")
     input_type("Press Enter to continue")
     os.system('cls')
-        
+
 def use_potion(player):
     if "Health Potion" not in player["inventory"]:
         type_print("You dig around in your pack... No potions. :(")
