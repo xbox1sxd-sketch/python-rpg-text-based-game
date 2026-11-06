@@ -41,8 +41,8 @@ type_print("\n\n I hope you enjoy!\n\n")
 
 def get_name():
     player_name = input_type("What would you like to be called Adventurer? ").strip()
-    if player_name == "":
-        type_print("not a valid name")
+    if len(player_name) < 4:
+        type_print("Name must be atleast 4 characters :)")
         os.system('cls')
         return get_name()
     print("\n")
@@ -75,7 +75,7 @@ def play_beginning():
     return health, damage
 
 def choose_a_path(player):
-    path = input_type("\nNow, where would you like to go? A: A shimmering city. B: A dark forest. C: Through the swamp. I: Inventory ").upper()
+    path = input_type("\nNow, where would you like to go? A: A shimmering city. B: A dark forest. C: Through the swamp. I: Inventory P: Drink a health pot ").upper()
     if path == "A":
         os.system('cls')
         return shimmering_city(player)
@@ -95,7 +95,7 @@ def choose_a_path(player):
         return choose_a_path(player)
     else:
         os.system('cls')
-        type_print("Please choose A, B, or C")
+        type_print("Please choose A, B, or C, I, or P")
         
         return choose_a_path(player)
 
@@ -109,7 +109,7 @@ def shimmering_city(player):
         return choose_a_path(player)
     elif guards == "B":
         os.system('cls')
-        type_print("Somehow, this managed to work. You are now inside the city.")
+        type_print("This managed to work. You are now inside the city.")
         return inside_city(player)
     elif guards == "C":
         os.system('cls')
@@ -137,10 +137,12 @@ def swamp(player):
         witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up?").upper()
         if witch == "A":
             type_print("You tried to kill her, but failed as she suddenly rolled over. This woke her up. You died.")
+            input_type("press enter to continue")
             os.system('cls')
             return start_game()
         elif witch == "B":
             type_print("You really scared her as shes used to being alone. You died.")
+            input_type("press enter to continue")
             os.system('cls')
             return start_game()
         else:
@@ -175,21 +177,31 @@ def inside_city(player):
 def shop(player):
     os.system('cls')
     type_print(" A exhausted looking blacksmith looks up from this anvil? 'What'll it be' he says")
-    type_print(f"You have {player['gold']} gold.")
-    choice = input_type("A: A health potion (10g). B: A gold scythe (+3 damage, 30g) Or C: Leave").upper().strip()
+    type_print(f"You have {player['gold']} gold (earn more from fighting).")
+    choice = input_type("A: A health potion (10g). B: A Gold Scythe (+3 damage, 30g) Or C: Leave").upper().strip()
     if choice == "A":
         if player["gold"] >= 10:
             player["gold"] -= 10
             pickup(player, "Health Potion")
+            input_type("Press enter to continue")
+            return shop(player)
         else:
             type_print("You dont have enough gold.")
+            input_type("press enter to continue")
             os.system('cls')
             return shop(player)
     elif choice == "B":
+        if "Gold Scythe" in player["inventory"]:
+            type_print("You cant buy another")
+            input_type("Press enter to continue")
+            return shop(player)
         if player["gold"] >= 30:
             player["gold"] -= 30
             player["damage"] += 3
             type_print(f"Congrats! Your damage is now {player['damage']}")
+            pickup(player, "Gold Scythe")
+            input_type("Press enter to continue")
+            return shop(player)
         else:
             type_print("you dont have enough gold :(")
             os.system('cls')
@@ -198,6 +210,22 @@ def shop(player):
         return inside_city(player)
     else:
         type_print("Please choose A, B, or C")
+        return shop(player)
+
+def wander_streets(player):
+    os.system('cls')
+    roll = random.randint(1, 10)
+    if roll <= 4:
+        gold_found = random.randint(10, 30)
+        player["gold"] += gold_found
+        type_print(f"you spot a wallet on the floor +{gold_found} gold")
+        return inside_city(player)
+    elif roll <= 7:
+        type_print("An angry dude thinks you stole his wallet!")
+        return combat(player, 40, 10, "angry dude", "city")
+    else:
+        type_print("Nothing worthwhile here")
+        return inside_city(player)
 
 def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
     type_print(f"You encounter a {enemy_name}.")
@@ -218,6 +246,9 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
         elif choice == "C":
             if use_potion(player) == False:
                 type_print("You fumble in your pack and waste your turn :sob:")
+                damage_dealt = random.randint(enemy_damage -2, enemy_damage +2)
+                player["health"] -= damage_dealt
+                type_print(f"The [enemy_name] did {damage_dealt} damage while you were fooling around! you have {player['health']} health left! ")
         else:
             type_print("Please choose A, B or C")
     if enemy_health <= 0:
@@ -232,9 +263,13 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
         
 def enemy_drop(player, enemy_name):
     roll = random.randint(1, 100)
-    if roll <= 35:
+    if roll <= 30:
         type_print(f"The {enemy_name} was holding something...")
         pickup(player, "Health Potion")
+    elif roll <= 60:
+        gold_found = random.randint(10, 20)
+        player["gold"] += gold_found
+        type_print(f"You got {gold_found} gold from that corpse!")
 
 def show_inventory(player):
     type_print("\n --- INVENTORY ---")
@@ -245,6 +280,7 @@ def show_inventory(player):
             type_print(" -" + item)
     type_print(f"\n Gold: {player['gold']}")
     type_print(f"Health: {player['health']}/{player['max_health']}")
+    type_print(f"Damage: {player['damage']}")
     input_type("Press Enter to continue")
     os.system('cls')
 
@@ -268,8 +304,17 @@ def pickup(player, item):
     player["inventory"].append(item)
     type_print("you got a " + item + "!")
     
+def silver_scythe(player):
+    if "Silver Scythe" in player["inventory"]:
+            type_print("You already have a silver scythe, you decide not to grab it")
+            return
+    player["damage"] += 2
+    pickup(player, "Silver Scythe")
+    type_print(f"Your damage now is {player['damage']}")
+    return True
+
 def open_chest(player):
-    type_print("you open the chest")
+    type_print("you open the chest")    
     gold_found = random.randint(5, 20)
     player["gold"] += gold_found
     type_print(f"You find {gold_found} gold!")
@@ -277,7 +322,14 @@ def open_chest(player):
     if roll <= 55:
         pickup(player, "Health Potion")
     elif roll <= 80:
-        pickup(player, "Silver Scythe")
+        if silver_scythe(player) == False:
+            gold_found = random.randint(10, 25)
+            player["gold"] += gold_found
+            type_print(f"you leave the scythe and grab {gold_found} gold instead ")        
+    elif roll <= 90:
+        silver_scythe(player)
+        pickup(player, "Health Potion")
+        type_print("WOW")
     else:
         type_print("... and nothing else. Somebody else got here first!")
     
