@@ -172,6 +172,33 @@ def inside_city(player):
         os.system('cls')
         return inside_city(player)
 
+def shop(player):
+    os.system('cls')
+    type_print(" A exhausted looking blacksmith looks up from this anvil? 'What'll it be' he says")
+    type_print(f"You have {player['gold']} gold.")
+    choice = input_type("A: A health potion (10g). B: A gold scythe (+3 damage, 30g) Or C: Leave").upper().strip()
+    if choice == "A":
+        if player["gold"] >= 10:
+            player["gold"] -= 10
+            pickup(player, "Health Potion")
+        else:
+            type_print("You dont have enough gold.")
+            os.system('cls')
+            return shop(player)
+    elif choice == "B":
+        if player["gold"] >= 30:
+            player["gold"] -= 30
+            player["damage"] += 3
+            type_print(f"Congrats! Your damage is now {player['damage']}")
+        else:
+            type_print("you dont have enough gold :(")
+            os.system('cls')
+            return shop(player)
+    elif choice == "C":
+        return inside_city(player)
+    else:
+        type_print("Please choose A, B, or C")
+
 def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
     type_print(f"You encounter a {enemy_name}.")
     type_print(f"It has {enemy_health} health!")
