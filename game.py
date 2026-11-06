@@ -159,7 +159,7 @@ def inside_city(player):
     os.system('cls')
     type_print("You now sneak past the gates into the shimmering city")
     type_print("It is beautiful, unlike any city you have ever seen.")
-    choice = input_type("What do you do? A.) Look for the blacksmith. B.) Wander around. C. Leave").upper().strip()
+    choice = input_type("What do you do? A.) Look for the blacksmith. B.) Wander around. C.) Look at the giant grate D. Leave").upper().strip()
     if choice == "A":
         os.system('cls')
         return shop(player)
@@ -168,9 +168,12 @@ def inside_city(player):
         return wander_streets(player)
     elif choice == "C":
         os.system('cls')
+        return dungeon(player)
+    elif choice == "D":
+        os.system('cls')
         return choose_a_path(player)
     else:
-        type_print("please enter A, B, OR C")
+        type_print("please enter A, B, C, or D")
         os.system('cls')
         return inside_city(player)
 
@@ -248,6 +251,8 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
             type_print("You scream and run away")
             if next == "city":
                 return inside_city(player)
+            elif next == "Dungeon":
+                return dungeon(player)
             return choose_a_path(player)
         elif choice == "C":
             if use_potion(player) == False:
@@ -259,16 +264,55 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
             type_print("Please choose A, B or C")
     if enemy_health <= 0:
         type_print("YOU WON!")
+        if enemy_name == "Warden":
+            player["warden_dead"] = True
+            type_print("The warden collapses. You hear nothing now.")
         enemy_drop(player, enemy_name)
         input_type("press enter to continue")
         if next == "city":
             return inside_city(player)
+        elif next == "Dungeon":
+            return dungeon(player)
         return choose_a_path(player)
     elif player["health"] <= 0:
         type_print("You lost LOL")
+        type_print("You wake up at the crossroads. Your bag feels lighter.")
+        player["health"] = player["max_health"] // 2
+        player["gold"] = player["gold"] // 2
         input_type("Press enter to continue")
-        return start_game()
+        return choose_a_path(player)
         
+def dungeon(player):
+    os.system('cls')
+    type_print("You stand in the tunnel under the city.")
+    type_print("You hear screams, and weird noises.")
+    choice = input_type(" Do you A: Push deeper, or B, climb back up.").upper().strip()
+    if choice == "A":
+        os.system('cls')
+        roll = random.randint(1, 10)
+        if roll <= 6:
+            type_print("You see something out of the corner of your eye")
+            return combat(player, 35, 7, "Shanker", "Dungeon")
+        else: 
+            type_print("A giant gold door stands atthe end of the tunnel")
+            return boss_fight(player)
+    elif choice == "B":
+        os.system('cls')
+        return inside_city(player)
+    else:
+        type_print("Please choose A, or B")
+        return dungeon(player)
+        
+def boss_fight(player):
+    if player["warden_dead"] == True:
+        type_print("The gold door stands silent. Nothing is behind it now.")
+        input_type("Press enter to continue")
+        return dungeon(player)
+    os.system('cls')
+    type_print("The door slides open, the ground rumbles as the thing behind it awakens...")
+    type_print("The warden RISES")
+    return combat(player, 100, 12, "Warden", "Dungeon")        
+
 def enemy_drop(player, enemy_name):
     roll = random.randint(1, 100)
     if roll <= 30:
@@ -345,6 +389,7 @@ def start_game():
     player_health, player_damage = play_beginning()
     player = {
     "name": player_name,
+    "warden_dead": False,
     "damage": player_damage,
     "health": player_health,
     "max_health": player_health,
