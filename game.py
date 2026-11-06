@@ -129,7 +129,7 @@ def dark_forest(player):
     else:
         type_print("You discover a treasure chest! How rare!")
         open_chest(player)
-    return choose_a_path(player)
+        return choose_a_path(player)
 
 def swamp(player):
     path = input_type("you trek your way through the swamp. There you see two things, which do you go to? A.) A Witches hut. B.) A seperate secret enterence to the city.").upper()
@@ -242,7 +242,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
             type_print(f"It has {enemy_health} health left!")
             damage_dealt = random.randint(enemy_damage - 2, enemy_damage + 2)
             if enemy_health > 0:
-                player["health"] -= damage_dealt
+                player["health"] = max(0, player["health"] - damage_dealt)
                 type_print(f"The {enemy_name} did {damage_dealt} damage! You have {player['health']} health left!" )
         elif choice == "B":
             type_print("You scream and run away")
