@@ -204,12 +204,14 @@ def shop(player):
             return shop(player)
         else:
             type_print("you dont have enough gold :(")
+            input_type("Press enter to continue")
             os.system('cls')
             return shop(player)
     elif choice == "C":
         return inside_city(player)
     else:
         type_print("Please choose A, B, or C")
+        input_type("Press enter to continue")
         return shop(player)
 
 def wander_streets(player):
@@ -219,12 +221,14 @@ def wander_streets(player):
         gold_found = random.randint(10, 30)
         player["gold"] += gold_found
         type_print(f"you spot a wallet on the floor +{gold_found} gold")
+        input_type("Press enter to continue")
         return inside_city(player)
     elif roll <= 7:
         type_print("An angry dude thinks you stole his wallet!")
         return combat(player, 40, 10, "angry dude", "city")
     else:
         type_print("Nothing worthwhile here")
+        input_type("Press enter to continue")
         return inside_city(player)
 
 def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
@@ -242,6 +246,8 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
                 type_print(f"The {enemy_name} did {damage_dealt} damage! You have {player['health']} health left!" )
         elif choice == "B":
             type_print("You scream and run away")
+            if next == "city":
+                return inside_city(player)
             return choose_a_path(player)
         elif choice == "C":
             if use_potion(player) == False:
@@ -254,11 +260,13 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
     if enemy_health <= 0:
         type_print("YOU WON!")
         enemy_drop(player, enemy_name)
+        input_type("press enter to continue")
         if next == "city":
             return inside_city(player)
         return choose_a_path(player)
     elif player["health"] <= 0:
         type_print("You lost LOL")
+        input_type("Press enter to continue")
         return start_game()
         
 def enemy_drop(player, enemy_name):
@@ -306,8 +314,7 @@ def pickup(player, item):
     
 def silver_scythe(player):
     if "Silver Scythe" in player["inventory"]:
-            type_print("You already have a silver scythe, you decide not to grab it")
-            return
+        return False
     player["damage"] += 2
     pickup(player, "Silver Scythe")
     type_print(f"Your damage now is {player['damage']}")
