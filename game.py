@@ -248,7 +248,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
                 type_print("You fumble in your pack and waste your turn :sob:")
                 damage_dealt = random.randint(enemy_damage -2, enemy_damage +2)
                 player["health"] -= damage_dealt
-                type_print(f"The [enemy_name] did {damage_dealt} damage while you were fooling around! you have {player['health']} health left! ")
+                type_print(f"The {enemy_name} did {damage_dealt} damage while you were fooling around! you have {player['health']} health left! ")
         else:
             type_print("Please choose A, B or C")
     if enemy_health <= 0:
