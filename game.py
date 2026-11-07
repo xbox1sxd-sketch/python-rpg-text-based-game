@@ -116,6 +116,7 @@ def shimmering_city(player):
         return combat(player, 30, 5, "guard", "city")
     else:
         type_print("please enter A. B. or C.")
+        input_type("Press enter to continue")
         return shimmering_city(player)
 
 def dark_forest(player):
@@ -148,7 +149,7 @@ def swamp(player):
         player["gold"] = player["gold"] // 2
         input_type("press enter to continue")
         os.system('cls')
-        return choose_a_path
+        return choose_a_path(player)
         
 
 
