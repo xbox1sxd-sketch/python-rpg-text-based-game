@@ -136,11 +136,15 @@ def dark_forest(player):
 def swamp(player):
     path = input_type("you trek your way through the swamp. There you see two things, which do you go to? A.) A Witches hut. B.) A seperate secret enterence to the city.").upper()
     if path == "A":
-        witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up?").upper()
+        witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up? or C. Leave (recommended)").upper()
         if witch == "A":
             type_print("You tried to kill her, but failed as she suddenly rolled over. This woke her up. You died.")
         elif witch == "B":
             type_print("You really scared her. You died.")
+        elif witch == "C":
+            type_print("You decided to leave (very smart)")
+            input_type("Press enter to continue")
+            return choose_a_path(player)
         else:
             type_print("Please type A or B.")
             return swamp(player)
@@ -238,7 +242,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
     while enemy_health > 0 and player["health"] > 0:
         choice = input_type("Would you like to A.) Attack or B.) Flee C.) Use a Potion ").strip().upper()
         if choice == "A":
-            enemy_health -= player["damage"]
+            enemy_health = max(0, enemy_health - player["damage"])
             type_print(f"you did {player['damage']} damage!")
             type_print(f"It has {enemy_health} health left!")
             damage_dealt = random.randint(enemy_damage - 2, enemy_damage + 2)
@@ -288,9 +292,18 @@ def dungeon(player):
     if choice == "A":
         os.system('cls')
         roll = random.randint(1, 10)
-        if roll <= 6:
-            type_print("You see something out of the corner of your eye")
+        if roll <= 3:
+            type_print("something scurries past your feet")
+            return combat(player, 20, 5, "crawler", "Dungeon")
+        if roll <= 5:
+            type_print("A figure stumbles out")
             return combat(player, 35, 7, "Shanker", "Dungeon")
+        if roll <= 7:
+            type_print("Something drags itself to you")
+            return combat(player, 45, 6, "trash thing", "Dungeon")
+        if roll <= 9:
+            type_print("two shankers step out step by side")
+            return combat(player, 70, 20, "twin shankers", "Dungeon")
         else: 
             type_print("A giant gold door stands atthe end of the tunnel")
             return boss_fight(player)
