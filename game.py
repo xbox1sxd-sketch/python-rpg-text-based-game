@@ -367,7 +367,7 @@ def merchant(player):
             input_type("Press enter to continue")
             return merchant(player)
         else:
-            print_type("You dont have enough gold")
+            type_print("You dont have enough gold")
             input_type("Press enter to continue")
             return merchant(player)
     elif choice == "B":
@@ -411,6 +411,22 @@ def merchant(player):
         input_type("Press enter to continue")
         return merchant(player)
 
+def local(player):
+    os.system('cls')
+    type_print("A thin man leans against a wall. He looks like he hasnt slept in a while...")
+    type_print("'You killed the warden' he says 'we heard it fall from here'.")
+    type_print("'Do you know how much it did for us?'")
+    choice = input_type("A.) It was guarding this place B.) It was keeping something out. C.) Say nothing").upper().strip()
+    if choice == "A":
+        type_print("'No,' he says. 'it was keeping something in'")
+    elif choice == "B":
+        type_print("'Wrong way round' he says 'it was keeping it from getting out")
+    else:
+        type_print("Dont matter, he says 'You should know either way'")
+    type_print("When the old city was sealed, the warden was used as a lock to keep it out. The sealed one is what the lock was for'")
+    type_print("'Now the lock is broken. It will awaken soon.'")
+    input_type("Press enter to continue")
+    return village(player)
 
 def dungeon(player):
     os.system('cls')
