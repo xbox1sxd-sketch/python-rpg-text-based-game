@@ -320,37 +320,55 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
     
 def dungeon(player):
     os.system('cls')
-    type_print("You stand in the tunnel under the city.")
-    type_print("You hear screams, and weird noises.")
-    choice = input_type(" Do you A: Push deeper, or B, climb back up.").upper().strip()
-    if choice == "A":
+    floor = player["dungeon_floor"]
+    if player["warden_dead"] and floor == 0:
+        type_print("The tunnel is quit, the tunnel to the Sealed Village is Open")
+        choice = input_type("A.) Walk straight to the village. B.) Fight your way down again. C.) Leave")
+        if choice == "A":
+            os.system('cls')
+            return hidden_city(player)
+        elif choice == "B":
+            os.system('cls')
+        elif choice == "C":
+            return inside_city(player)
+        else:
+            type_print("Please choose A, B, or C.")
+            input_type("Press enter to continue")
+            return dungeon(player)
+    if floor >= 6:
+        return hidden_city(player)
+    if floor == 5:
+        return boss_fight(player)
+    if floor > 0:
+        type_print(f"You stand in the tunnel, {floor} floor(s) under the city.")
+        choice = input_type("A.) Fight whats ahead. B: Climb back up (lose all dungeon progress)").upper().strip()
+        if choice == "B":
+            player["dungeon_floor"] = 0
+            type_print("You climb back up. Losing all your progress.")
+            input_type("Press enter to continue")
+            os.system('cls')
+            return inside_city(player)
+        elif choice != "A":
+            type_print("Please choose A or B.")
+            input_type("Press enter to continue")
+            return dungeon(player)
         os.system('cls')
-        roll = random.randint(1, 10)
-        if roll <= 3:
+        
+        if floor == 0 :
             type_print("something scurries past your feet")
             return combat(player, 20, 5, "crawler", "Dungeon")
-        if roll <= 5:
+        elif floor == 1:
             type_print("A figure stumbles out")
             return combat(player, 35, 7, "Shanker", "Dungeon")
-        if roll <= 7:
+        elif floor == 2:
             type_print("Something drags itself to you")
             return combat(player, 45, 6, "trash thing", "Dungeon")
-        if roll <= 8:
+        elif floor == 3:
             type_print("Something drops from above")
             return combat(player, 55, 10, "haunter", "Dungeon")
-        if roll <= 9:
+        else:
             type_print("two shankers step out side by side")
             return combat(player, 70, 12, "twin shankers", "Dungeon")
-        else: 
-            type_print("A giant gold door stands at the end of the tunnel")
-            return boss_fight(player)
-    elif choice == "B":
-        os.system('cls')
-        return inside_city(player)
-    else:
-        type_print("Please choose A, or B")
-        input_type("Press enter to continue")
-        return dungeon(player)
         
 def boss_fight(player):
     if player["warden_dead"] == True:
@@ -439,6 +457,10 @@ def start_game():
     player = {
     "name": player_name,
     "warden_dead": False,
+    "sealed_one_dead": False,
+    "whetstone_bought": False,
+    "iron_heart_bought": False,
+    "dungeon_floor": 0,
     "damage": player_damage,
     "health": player_health,
     "max_health": player_health,
