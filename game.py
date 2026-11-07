@@ -287,6 +287,8 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
                 return inside_city(player)
             elif next == "Dungeon":
                 return dungeon(player)
+            elif next == "HiddenCity":
+                return far_underground(player)
             return choose_a_path(player)
         elif choice == "C":
             if use_potion(player) == False:
@@ -302,31 +304,123 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
             player["warden_dead"] = True
             player["damage"] += 7
             pickup(player, "Warden's spear")
-            type_print("The warden collapses. You hear nothing now.")
+            type_print("The warden collapses. The gold door grinds open behind it.")
+            input_type("Press enter to continue")
+            player["dungeon_floor"] = 6
+            return village(player)
+        if enemy_name == "The Sealed One":
+            player["sealed_one_dead"] = True
+            input_type("Press enter to continue")
+            return sealed_ending(player)
         enemy_drop(player, enemy_name)
         input_type("Press enter to continue")
         if next == "city":
             return inside_city(player)
         elif next == "Dungeon":
+            player["dungeon_floor"] += 1
             return dungeon(player)
+        elif next == "HiddenCity":
+            return far_underground(player)
         return choose_a_path(player)
     elif player["health"] <= 0:
         type_print("You lost LOL")
         type_print("You wake up at the crossroads. Your bag feels lighter.")
         player["health"] = player["max_health"] // 2
         player["gold"] = player["gold"] // 2
+        player["dungeon_floor"] = 0
         input_type("Press enter to continue")
         return choose_a_path(player)
-    
+
+def village(player):
+    os.system('cls')
+    type_print("The tunnel opens into a street...?")
+    type_print("Above you, far above, you can hear the ground shake above you.")
+    choice = input_type("What do you do? A.) Visit the market B.) Talk to a local C.) Keep walking D.) Try to go back up")
+    if choice == "A":
+        os.system('cls')
+        return merchant(player)
+    elif choice == "B":
+        os.system('cls')
+        return local(player)
+    elif choice == "C":
+        os.system('cls')
+        return far_underground(player)
+    elif choice == "D":
+        player["dungeon_floor"] = 0
+        os.system('cls')
+        return inside_city(player)
+    else:
+        type_print("Please choose A, B, C, or D" )
+        input_type("Press enter to continue")
+        return village(player)
+
+def merchant(player):
+    os.system('cls')
+    type_print("An old woman sits behind a counter. Her eyes are pale, she looks tired.")
+    type_print("'You came from up there' she says. Haven't seen one of yem since the 3rd epoch.")
+    type_print(f"You have {player['gold']} gold.")
+    choice = input_type("A.) Health potion(8g). B.) Whetstone(+2 dmg, 40g) C.) Iron Heart(+25 max health, 50g) D.) Leave").strip().upper()
+    if choice == "A":
+        if player["gold"] >= 8:
+            player["gold"] -= 8
+            pickup(player, "Health Potion")
+            input_type("Press enter to continue")
+            return merchant(player)
+        else:
+            print_type("You dont have enough gold")
+            input_type("Press enter to continue")
+            return merchant(player)
+    elif choice == "B":
+        if player ["whetstone_bought"]:
+            type_print("'I've already used the whetstone for you' says the merchant.")
+            input_type("Press enter to continue")
+            return merchant(player)
+        if player["gold"] >= 40:
+            player["whetstone_bought"] = True
+            player["gold"] -= 40
+            player["damage"] += 2
+            type_print(f"She sharpens your weapon. Your damage is now {player['damage']}")
+            input_type("Press enter to continue")
+            return merchant(player)
+        else:
+            type_print("You dont have enough gold")
+            input_type("Press enter to continue")
+            return merchant(player)
+    elif choice == "C":
+        if player["iron_heart_bought"]:
+            type_print("'You've already bought one' she says")
+            input_type("Press enter to continue")
+            return merchant(player)
+        if player["gold"] >= 50:
+            player["iron_heart_bought"] = True
+            player["gold"] -= 50
+            player["max_health"] += 25
+            type_print(f"She hands you some mercury in a bottle and tells you to drink up. Your max health is now {player['max_health']}")
+            input_type("Press enter to continue")
+            return merchant(player)
+        else:
+            type_print("You dont have enough gold")
+            input_type("Press enter to continue")
+            return merchant(player)
+
+    elif choice == "D":
+        os.system('cls')
+        return village(player)
+    else:
+        type_print("Please choose A, B, C, or D.")
+        input_type("Press enter to continue")
+        return merchant(player)
+
+
 def dungeon(player):
     os.system('cls')
     floor = player["dungeon_floor"]
     if player["warden_dead"] and floor == 0:
         type_print("The tunnel is quit, the tunnel to the Sealed Village is Open")
-        choice = input_type("A.) Walk straight to the village. B.) Fight your way down again. C.) Leave")
+        choice = input_type("A.) Walk straight to the village. B.) Fight your way down again. C.) Leave").strip().upper()
         if choice == "A":
             os.system('cls')
-            return hidden_city(player)
+            return village(player)
         elif choice == "B":
             os.system('cls')
         elif choice == "C":
@@ -336,7 +430,7 @@ def dungeon(player):
             input_type("Press enter to continue")
             return dungeon(player)
     if floor >= 6:
-        return hidden_city(player)
+        return village(player)
     if floor == 5:
         return boss_fight(player)
     if floor > 0:
@@ -352,21 +446,21 @@ def dungeon(player):
             type_print("Please choose A or B.")
             input_type("Press enter to continue")
             return dungeon(player)
-        os.system('cls')
+    os.system('cls')
         
-        if floor == 0 :
+    if floor == 0 :
             type_print("something scurries past your feet")
             return combat(player, 20, 5, "crawler", "Dungeon")
-        elif floor == 1:
+    elif floor == 1:
             type_print("A figure stumbles out")
             return combat(player, 35, 7, "Shanker", "Dungeon")
-        elif floor == 2:
+    elif floor == 2:
             type_print("Something drags itself to you")
             return combat(player, 45, 6, "trash thing", "Dungeon")
-        elif floor == 3:
+    elif floor == 3:
             type_print("Something drops from above")
             return combat(player, 55, 10, "haunter", "Dungeon")
-        else:
+    else:
             type_print("two shankers step out side by side")
             return combat(player, 70, 12, "twin shankers", "Dungeon")
         
