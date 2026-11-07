@@ -183,7 +183,7 @@ def shop(player):
     os.system('cls')
     type_print(" A exhausted looking blacksmith looks up from this anvil? 'What'll it be' he says")
     type_print(f"You have {player['gold']} gold (earn more from fighting).")
-    choice = input_type("A: A health potion (10g). B: A Gold Scythe (+3 damage, 30g) Or C: Leave").upper().strip()
+    choice = input_type("A: A health potion (10g). B: A Gold Scythe (+3 dmg, 30g) Or C: Iron Dagger (+1 dmg, 15g) D: War Axe (+5 dmg, 60g) E: Leave ").upper().strip()
     if choice == "A":
         if player["gold"] >= 10:
             player["gold"] -= 10
@@ -210,12 +210,43 @@ def shop(player):
         else:
             type_print("you dont have enough gold :(")
             input_type("Press enter to continue")
-            os.system('cls')
             return shop(player)
     elif choice == "C":
+        if "Iron Dagger" in player["inventory"]:
+            type_print("You already have one")
+            input_type("Press enter to continue")
+            return shop(player)
+        if player ["gold"] >= 15:
+            player["gold"] -= 15
+            player["damage"] += 1
+            type_print(f"Your damage is now {player['damage']}")
+            pickup(player, "Iron Dagger")
+            input_type("Press enter to continue")
+            return shop(player)
+        else:
+            type_print("you dont have enough gold :(")
+            input_type("Press enter to continue")
+            os.system('cls')
+            return shop(player)
+    elif choice == "D":
+        if "War Axe" in player["inventory"]:
+            type_print("You cant buy another")
+            input_type("Press enter to continue")
+            return shop(player)
+        if player["gold"] >= 60:
+            player["gold"] -= 60
+            player["damage"] += 5
+            type_print(f"Your damage is now {player['damage']}")
+            pickup(player, "War Axe")
+            input_type("Press enter to continue")
+        else:
+            type_print("You dont have enough gold :(")
+            input_type("Press enter to continue")
+            return shop(player)
+    elif choice == "E":
         return inside_city(player)
     else:
-        type_print("Please choose A, B, or C")
+        type_print("Please choose A, B, C, D, or E")
         input_type("Press enter to continue")
         return shop(player)
 
@@ -268,6 +299,8 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
         type_print("YOU WON!")
         if enemy_name == "Warden":
             player["warden_dead"] = True
+            player["damage"] += 7
+            pickup(player, "Warden's spear")
             type_print("The warden collapses. You hear nothing now.")
         enemy_drop(player, enemy_name)
         input_type("press enter to continue")
@@ -315,6 +348,7 @@ def dungeon(player):
         return inside_city(player)
     else:
         type_print("Please choose A, or B")
+        input_type("Press enter to continue")
         return dungeon(player)
         
 def boss_fight(player):
