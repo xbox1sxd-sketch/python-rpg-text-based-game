@@ -428,6 +428,36 @@ def local(player):
     input_type("Press enter to continue")
     return village(player)
 
+def far_underground(player):
+    os.system('cls')
+    type_print("The streets narrow.")
+    choice = input_type("A.) Walk deeper. B.) Approach the sealed gate. C.) go back.").upper().strip()
+    if choice == "A":
+        os.system('cls')
+        roll = random.randint(1, 10)
+        if roll <= 3:
+            type_print("A pale figure steps out of a doorway.")
+            return combat(player, 40, 12, "sealed child", "HiddenCity")
+        elif roll <= 6:
+            type_print("A child-shaped shadow runs past you.")
+            return combat(player, 40, 12, "sealed child", "HiddenCity")
+        elif roll <= 8:
+            type_print("A watcher in armor approaches")
+            return combat(player, 80, 14, "sealed knight", "HiddenCity")
+        else:
+            type_print("A hunched thing crawls over.")
+            return combat(player, 70, 12, "better crawler", "HiddenCity")
+    elif choice == "B":
+        os.system('cls')
+        return sealed_gate(player)
+    elif choice == "C":
+        os.system('cls')
+        return village(player)
+    else:
+        type_print("Please choose A, B, or C.")
+        input_type("Press enter to continue")
+        return far_underground(player)
+
 def dungeon(player):
     os.system('cls')
     floor = player["dungeon_floor"]
