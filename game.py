@@ -129,6 +129,7 @@ def dark_forest(player):
     else:
         type_print("You discover a treasure chest! How rare!")
         open_chest(player)
+        input_type("Press enter to continue")
         return choose_a_path(player)
 
 def swamp(player):
@@ -137,23 +138,19 @@ def swamp(player):
         witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up?").upper()
         if witch == "A":
             type_print("You tried to kill her, but failed as she suddenly rolled over. This woke her up. You died.")
-            input_type("press enter to continue")
-            os.system('cls')
-            return start_game()
         elif witch == "B":
-            type_print("You really scared her as shes used to being alone. You died.")
-            input_type("press enter to continue")
-            os.system('cls')
-            return start_game()
+            type_print("You really scared her. You died.")
         else:
             type_print("Please type A or B.")
             return swamp(player)
-            
-    elif path == "B":
-        return shimmering_city(player)
-    else:
-        type_print("Please say A, or B")
-        return swamp(player)
+        type_print("You wake at the crossroads. Your bag feels lighter.")
+        player["health"] = player["max_health"] // 2
+        player["gold"] = player["gold"] // 2
+        input_type("press enter to continue")
+        os.system('cls')
+        return choose_a_path
+        
+
 
 def inside_city(player):
     os.system('cls')
@@ -281,7 +278,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
         player["gold"] = player["gold"] // 2
         input_type("Press enter to continue")
         return choose_a_path(player)
-        
+    
 def dungeon(player):
     os.system('cls')
     type_print("You stand in the tunnel under the city.")
