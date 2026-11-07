@@ -260,7 +260,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
             if use_potion(player) == False:
                 type_print("You fumble in your pack and waste your turn :sob:")
                 damage_dealt = random.randint(enemy_damage -2, enemy_damage +2)
-                player["health"] -= damage_dealt
+                player["health"] = max(0, player["health"] - damage_dealt)
                 type_print(f"The {enemy_name} did {damage_dealt} damage while you were fooling around! you have {player['health']} health left! ")
         else:
             type_print("Please choose A, B or C")
@@ -301,11 +301,14 @@ def dungeon(player):
         if roll <= 7:
             type_print("Something drags itself to you")
             return combat(player, 45, 6, "trash thing", "Dungeon")
+        if roll <= 8:
+            type_print("Something drops from above")
+            return combat(player, 55, 10, "haunter", "Dungeon")
         if roll <= 9:
-            type_print("two shankers step out step by side")
-            return combat(player, 70, 20, "twin shankers", "Dungeon")
+            type_print("two shankers step out side by side")
+            return combat(player, 70, 12, "twin shankers", "Dungeon")
         else: 
-            type_print("A giant gold door stands atthe end of the tunnel")
+            type_print("A giant gold door stands at the end of the tunnel")
             return boss_fight(player)
     elif choice == "B":
         os.system('cls')
