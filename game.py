@@ -75,7 +75,7 @@ def play_beginning():
     return health, damage
 
 def choose_a_path(player):
-    path = input_type("\nNow, where would you like to go? A: A shimmering city. B: A dark forest. C: Through the swamp. I: Inventory P: Drink a health pot ").upper()
+    path = input_type("\nNow, where would you like to go? A: A shimmering city. B: A dark forest. C: Through the swamp. I: Inventory P: Drink a health pot ").upper().strip()
     if path == "A":
         os.system('cls')
         return shimmering_city(player)
@@ -103,7 +103,7 @@ def choose_a_path(player):
 def shimmering_city(player):
     os.system('cls')
     type_print("You make your way down to the city... unfortunately you somehow get stopped by the guard for not having any ID.")
-    guards = input_type("Do you A. Turn back to the crossroads. B: Say you'll turn back and try to sneak past them. C: Fight ").upper()
+    guards = input_type("Do you A. Turn back to the crossroads. B: Say you'll turn back and try to sneak past them. C: Fight ").upper().strip()
     if guards == "A":
         os.system('cls')
         return choose_a_path(player)
@@ -134,9 +134,9 @@ def dark_forest(player):
         return choose_a_path(player)
 
 def swamp(player):
-    path = input_type("You trek your way through the swamp. There you see two things, which do you go to? A.) A Witches hut. B.) A seperate secret enterence to the city.").upper()
+    path = input_type("You trek your way through the swamp. There you see two things, which do you go to? A.) A Witches hut. B.) A seperate secret enterence to the city.").upper().strip()
     if path == "A":
-        witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up? or C. Leave (recommended)").upper()
+        witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up? or C. Leave (recommended)").upper().strip()
         if witch == "A":
             type_print("You tried to kill her, but failed as she suddenly rolled over. This woke her up.")
             return combat(player, 40, 10, "Witch")
@@ -152,7 +152,7 @@ def swamp(player):
             return swamp(player)
     elif path == "B":
         type_print("You find a hidden enterence into the city")
-        type_print("Press enter to continue")
+        input_type("Press enter to continue")
         return inside_city(player)
     else:
         type_print("Please choose A or B")
@@ -192,7 +192,7 @@ def shop(player):
             input_type("Press enter to continue")
             return shop(player)
         else:
-            type_print("You dont have enough gold.")
+            type_print("You don't have enough gold.")
             input_type("Press enter to continue")
             os.system('cls')
             return shop(player)
@@ -209,7 +209,7 @@ def shop(player):
             input_type("Press enter to continue")
             return shop(player)
         else:
-            type_print("You dont have enough gold :(")
+            type_print("You don't have enough gold :(")
             input_type("Press enter to continue")
             return shop(player)
     elif choice == "C":
@@ -225,7 +225,7 @@ def shop(player):
             input_type("Press enter to continue")
             return shop(player)
         else:
-            type_print("you dont have enough gold :(")
+            type_print("You don't have enough gold :(")
             input_type("Press enter to continue")
             os.system('cls')
             return shop(player)
@@ -242,7 +242,7 @@ def shop(player):
             input_type("Press enter to continue")
             return shop(player)
         else:
-            type_print("You dont have enough gold :(")
+            type_print("You don't have enough gold :(")
             input_type("Press enter to continue")
             return shop(player)
     elif choice == "E":
@@ -368,7 +368,7 @@ def merchant(player):
             input_type("Press enter to continue")
             return merchant(player)
         else:
-            type_print("You dont have enough gold")
+            type_print("You don't have enough gold")
             input_type("Press enter to continue")
             return merchant(player)
     elif choice == "B":
@@ -384,7 +384,7 @@ def merchant(player):
             input_type("Press enter to continue")
             return merchant(player)
         else:
-            type_print("You dont have enough gold")
+            type_print("You don't have enough gold")
             input_type("Press enter to continue")
             return merchant(player)
     elif choice == "C":
@@ -401,7 +401,7 @@ def merchant(player):
             input_type("Press enter to continue")
             return merchant(player)
         else:
-            type_print("You dont have enough gold")
+            type_print("You don't have enough gold")
             input_type("Press enter to continue")
             return merchant(player)
 
@@ -422,7 +422,7 @@ def local(player):
     if choice == "A":
         type_print("'No,' he says. 'it was keeping something in'")
     elif choice == "B":
-        type_print("'Wrong way round' he says 'it was keeping it from getting out")
+        type_print("'Wrong way round' he says 'it was keeping it from getting out'")
     else:
         type_print("Dont matter, he says 'You should know either way'")
     type_print("'When the old city was sealed, the warden was used as a lock to keep it out. The sealed one is what the lock was for'")
@@ -454,7 +454,7 @@ def far_underground(player):
             return combat(player, 70, 12, "better crawler", "HiddenCity")
         else:
             type_print("A hunched thing crawls over.")
-            return combat(player, 70, 12, "better crawler", "HiddenCity")
+            return combat(player, 80, 13, "elder crawler", "HiddenCity")
     elif choice == "B":
         os.system('cls')
         return sealed_gate(player)
@@ -503,10 +503,14 @@ def sealed_ending(player):
     if choice == "A":
         os.system('cls')
         return start_game()
-    else:
+    elif choice == "B":
         os.system('cls')
         type_print("THANKS FOR PLAYING!!")
         return
+    else:
+        type_print("Please choose A or B")
+        input_type("Press enter to continue")
+        return sealed_ending(player)
     
 def dungeon(player):
     os.system('cls')
@@ -528,6 +532,9 @@ def dungeon(player):
     if floor >= 6:
         return village(player)
     if floor == 5:
+        if player["warden_dead"]:
+            player["dungeon_floor"] = 6
+            return village(player)
         return boss_fight(player)
     if floor > 0:
         type_print(f"You stand in the tunnel, {floor} floor(s) under the city.")
@@ -635,7 +642,10 @@ def open_chest(player):
             player["gold"] += gold_found
             type_print(f"you leave the scythe and grab {gold_found} gold instead ")        
     elif roll <= 90:
-        silver_scythe(player)
+        if silver_scythe(player) == False:
+             gold_found = random.randint(10, 25)
+             player["gold"] += gold_found
+             type_print(f"You leave the scythe and grab {gold_found} gold instead")
         pickup(player, "Health Potion")
         type_print("WOW")
     else:
