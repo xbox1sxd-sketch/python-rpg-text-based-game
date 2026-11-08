@@ -138,22 +138,18 @@ def swamp(player):
     if path == "A":
         witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up? or C. Leave (recommended)").upper()
         if witch == "A":
-            type_print("You tried to kill her, but failed as she suddenly rolled over. This woke her up. You died.")
+            type_print("You tried to kill her, but failed as she suddenly rolled over. This woke her up.")
+            return combat(player, 40, 10, "Witch")
         elif witch == "B":
-            type_print("You really scared her. You died.")
+            type_print("You really scared her. She's enraged.")
+            return combat(player, 50, 12, "Witch")
         elif witch == "C":
             type_print("You decided to leave (very smart)")
             input_type("Press enter to continue")
             return choose_a_path(player)
         else:
-            type_print("Please type A or B.")
+            type_print("Please type A,  B or C.")
             return swamp(player)
-        type_print("You wake at the crossroads. Your bag feels lighter.")
-        player["health"] = player["max_health"] // 2
-        player["gold"] = player["gold"] // 2
-        input_type("Press enter to continue")
-        os.system('cls')
-        return choose_a_path(player)
         
 
 
@@ -335,7 +331,7 @@ def village(player):
     os.system('cls')
     type_print("The tunnel opens into a street...?")
     type_print("Above you, far above, you can hear the ground shake above you.")
-    choice = input_type("What do you do? A.) Visit the market B.) Talk to a local C.) Keep walking D.) Try to go back up")
+    choice = input_type("What do you do? A.) Visit the market B.) Talk to a local C.) Keep walking D.) Try to go back up").strip().upper()
     if choice == "A":
         os.system('cls')
         return merchant(player)
@@ -395,6 +391,7 @@ def merchant(player):
             player["iron_heart_bought"] = True
             player["gold"] -= 50
             player["max_health"] += 25
+            player["health"] += 25
             type_print(f"She hands you some mercury in a bottle and tells you to drink up. Your max health is now {player['max_health']}")
             input_type("Press enter to continue")
             return merchant(player)
@@ -423,7 +420,7 @@ def local(player):
         type_print("'Wrong way round' he says 'it was keeping it from getting out")
     else:
         type_print("Dont matter, he says 'You should know either way'")
-    type_print("When the old city was sealed, the warden was used as a lock to keep it out. The sealed one is what the lock was for'")
+    type_print("'When the old city was sealed, the warden was used as a lock to keep it out. The sealed one is what the lock was for'")
     type_print("'Now the lock is broken. It will awaken soon.'")
     input_type("Press enter to continue")
     return village(player)
@@ -440,10 +437,10 @@ def far_underground(player):
             return combat(player, 40, 12, "sealed child", "HiddenCity")
         elif roll <= 6:
             type_print("A child-shaped shadow runs past you.")
-            return combat(player, 40, 12, "sealed child", "HiddenCity")
+            return combat(player, 50, 15, "Pale Child", "HiddenCity")
         elif roll <= 8:
             type_print("A watcher in armor approaches")
-            return combat(player, 80, 14, "sealed knight", "HiddenCity")
+            return combat(player, 80, 14, "Watcher", "HiddenCity")
         else:
             type_print("A hunched thing crawls over.")
             return combat(player, 70, 12, "better crawler", "HiddenCity")
@@ -458,11 +455,53 @@ def far_underground(player):
         input_type("Press enter to continue")
         return far_underground(player)
 
+def sealed_gate(player):
+    os.system('cls')
+    if player["sealed_one_dead"]:
+        type_print("The gate is broken open. Nothing is inside...")
+        input_type("Press enter to continue")
+        return far_underground(player)
+    type_print("An enormous stone gate stands here.")
+    type_print(" Many chains lay snapped on the floor. A couple remain.")
+    type_print("You hear something breathe.")
+    choice = input_type("A.) Break the last chains. B.) Leave").upper().strip()
+    if choice == "A":
+        os.system('cls')
+        type_print("The last chain falls. The gate opens")
+        type_print("A shape appears, it has too many arms.")
+        type_print("It speaks")
+        type_print("'You freed me, an unwise decision.'")
+        return combat(player, 200, 16, "The Sealed One", "HiddenCity")
+    elif choice == "B":
+        os.system('cls')
+        return far_underground(player)
+    else:
+        type_print("Please choose A or B")
+        input_type("Press enter to continue")
+        return sealed_gate(player)
+    
+    
+def sealed_ending(player):
+    os.system('cls')
+    type_print("The sealed one falls. The lanterns go out one by one.")
+    type_print("The village is quiet for the first time in a long time.")
+    type_print("You climb back up to the surface.")
+    type_print("Congratulations! You have completed the game!")
+    type_print("\nTHE END\n")
+    choice = input_type("A.) Play again. B.) Close").upper().strip()
+    if choice == "A":
+        os.system('cls')
+        return start_game()
+    else:
+        os.system('cls')
+        type_print("THANKS FOR PLAYING!!")
+        return
+    
 def dungeon(player):
     os.system('cls')
     floor = player["dungeon_floor"]
     if player["warden_dead"] and floor == 0:
-        type_print("The tunnel is quit, the tunnel to the Sealed Village is Open")
+        type_print("The tunnel is quiet, the tunnel to the Sealed Village is Open")
         choice = input_type("A.) Walk straight to the village. B.) Fight your way down again. C.) Leave").strip().upper()
         if choice == "A":
             os.system('cls')
