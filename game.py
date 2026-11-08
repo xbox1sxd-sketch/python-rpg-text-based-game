@@ -5,7 +5,7 @@ import random
 import time
 
 
-#used ai for type_print function, and for msvcrt
+#used ai for type_print function , and for msvcrt
 def type_print(text, delay = 0.03):
     for i, letter in enumerate(text):
         if msvcrt.kbhit():
@@ -150,8 +150,13 @@ def swamp(player):
         else:
             type_print("Please type A,  B or C.")
             return swamp(player)
-        
-
+    elif path == "B":
+        type_print("You find a hidden enterence into the city")
+        type_print("Press enter to continue")
+        return inside_city(player)
+    else:
+        type_print("Please choose A or B")
+        return swamp(player)
 
 def inside_city(player):
     os.system('cls')
