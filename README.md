@@ -17,3 +17,4 @@ Built With
 - Python
 - Trinket
 - Visual Studio Code
+<img width="447" height="344" alt="image" src="https://github.com/user-attachments/assets/503ed519-62cc-4976-a036-2d3e06528337" />
