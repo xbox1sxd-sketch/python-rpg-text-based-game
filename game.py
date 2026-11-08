@@ -432,15 +432,21 @@ def far_underground(player):
     if choice == "A":
         os.system('cls')
         roll = random.randint(1, 10)
-        if roll <= 3:
+        if roll <= 2:
             type_print("A pale figure steps out of a doorway.")
             return combat(player, 40, 12, "sealed child", "HiddenCity")
+        elif roll <= 4:
+            type_print("Something flys through the walls.")
+            return combat(player, 55, 16, "ghoul", "HiddenCity")
         elif roll <= 6:
             type_print("A child-shaped shadow runs past you.")
             return combat(player, 50, 15, "Pale Child", "HiddenCity")
-        elif roll <= 8:
+        elif roll <= 7:
             type_print("A watcher in armor approaches")
             return combat(player, 80, 14, "Watcher", "HiddenCity")
+        elif roll <= 8:
+            type_print("A small thing crawls over.")
+            return combat(player, 70, 12, "better crawler", "HiddenCity")
         else:
             type_print("A hunched thing crawls over.")
             return combat(player, 70, 12, "better crawler", "HiddenCity")
