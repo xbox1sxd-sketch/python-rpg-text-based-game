@@ -1,14 +1,24 @@
 
-import msvcrt
 import os
 import random
 import time
 
+_system = os.system
+def _portable_system(command):
+    if command == "cls" and os.name != "nt":
+        command = "clear"                    
+    return _system(command)
+os.system = _portable_system
 
 #used ai for type_print function , and for msvcrt
+try:
+    import msvcrt
+except ImportError:
+    msvcrt = None 
+    
 def type_print(text, delay = 0.03):
     for i, letter in enumerate(text):
-        if msvcrt.kbhit():
+        if msvcrt is not None and msvcrt.kbhit():
             key = msvcrt.getch()
             if key == b'\r':
                 print(text[i:], end="", flush=True)
@@ -16,13 +26,13 @@ def type_print(text, delay = 0.03):
         print(letter, end="", flush=True)
         time.sleep(delay)
     print()
-    while msvcrt.kbhit():
+    while msvcrt is not None and msvcrt.kbhit():
         key = msvcrt.getch()
 
 
 def input_type(text, delay=0.03):
     for i, letter in enumerate(text):
-        if msvcrt.kbhit():
+        if msvcrt is not None and msvcrt.kbhit(): 
             key = msvcrt.getch()
 
             if key == b'\r':
@@ -35,8 +45,8 @@ def input_type(text, delay=0.03):
     return input()
 
 
-type_print("\n\n Welcome to my text based Adventure Game!")
-type_print("\n\n I hope you enjoy!\n\n")
+type_print("\n\nWelcome to my text based Adventure Game!")
+type_print("\n\nI hope you enjoy!\n\n")
     
 
 def get_name():
@@ -46,7 +56,7 @@ def get_name():
         os.system('cls')
         return get_name()
     print("\n")
-    type_print("Ah " + player_name + " What an excellent name.")
+    type_print("Ah " + player_name + ", What an excellent name.")
     return player_name
 
 
@@ -670,5 +680,5 @@ def start_game():
     type_print(f"\nWelcome {player_name}!")
     type_print(f"Your starting health is {player_health} and your starting damage is {player_damage}.")
     choose_a_path(player)
-
-start_game()
+if __name__ == "__main__":
+    start_game()
