@@ -13,6 +13,9 @@ Download the .exe from releases (recommended) or use this link: https://trinket.
 5. Fight enemies, collect items, and manage your health.
 6. Try to survive and complete your adventure!
 
+How I Built It
+I built this game using Python in Visual Studio Code. I organized the game using functions for different locations and events. I used loops and conditional statements to handle player choices and keep the game running. Dictionaries and variables manage player information, including health, damage, and inventory. I also used Python's random, os, and time modules for random events, screen clearing, and text effects.
+
 Built With
 - Python
 - Trinket
