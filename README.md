@@ -1,18 +1,23 @@
-python rpg text based game
+Text-Based Adventure RPG
 
-This is a text-based adventure game I made in Python.
+About
+This is a text-based adventure RPG made with Python. Explore different locations, encounter enemies, fight bosses, collect items, and make choices that affect your adventure. Discover hidden areas, manage your health, use potions, and find equipment to help you survive challenging encounters.
 
-How to play it
-If you want to run it on your own computer, you just need Python installed. 
-1. Download the code.
-2. Open your terminal (or command prompt) and navigate to the folder.
-3. Run `python main.py` (or whatever you named the file).
+How to Play
+Download the .exe from releases (recommended) or use this link: https://trinket.strivemath.org/python3/ec26e2495e1c (will not have the best effect).
 
-You could also go to https://onlinegdb.com/k4KlNqhgt
+1. Start the game.
+2. Enter your character's name.
+3. Choose a difficulty.
+4. Select where you want to explore.
+5. Fight enemies, collect items, and manage your health.
+6. Try to survive and complete your adventure!
 
-What's in the game?
-Combat: Turn-based fighting where you can attack, use potions, or run away.
-A Shop: You can earn gold by fighting enemies and spend it on better weapons or health potions.
-A Dungeon: There's a giant grate in the city that leads to a 5-floor dungeon. You have to fight your way down.
-Bosses: There is a Warden boss at the bottom of the dungeon, and a secret final boss if you can find the hidden sealed village.
-Inventory: You can check your stats, gold, and items at any time.
+How I Built It
+I built this game using Python in Visual Studio Code. I organized the game using functions for different locations and events. I used loops and conditional statements to handle player choices and keep the game running. Dictionaries and variables manage player information, including health, damage, and inventory. I also used Python's random, os, and time modules for random events, screen clearing, and text effects.
+
+Built With
+- Python
+- Trinket
+- Visual Studio Code
+<img width="447" height="344" alt="image" src="https://github.com/user-attachments/assets/503ed519-62cc-4976-a036-2d3e06528337" />
