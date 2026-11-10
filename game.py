@@ -286,7 +286,7 @@ def wander_streets(player):
         input_type("Press enter to continue")
         return inside_city(player)
 
-def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
+def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", flee_to = None):
     type_print(f"You encounter a {enemy_name}.")
     type_print(f"It has {enemy_health} health!")
     while enemy_health > 0 and player["health"] > 0:
@@ -301,11 +301,12 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads"):
                 type_print(f"The {enemy_name} did {damage_dealt} damage! You have {player['health']} health left!" )
         elif choice == "B":
             type_print("You scream and run away")
-            if next == "city":
+            target = flee_to if flee_to is not None else next
+            if target == "city":
                 return inside_city(player)
-            elif next == "Dungeon":
+            elif target == "Dungeon":
                 return dungeon(player)
-            elif next == "HiddenCity":
+            elif target == "HiddenCity":
                 return far_underground(player)
             return choose_a_path(player)
         elif choice == "C":
