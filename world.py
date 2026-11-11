@@ -66,29 +66,31 @@ def dark_forest(player):
         return choose_a_path(player)
 
 def swamp(player):
-    path = input_type("You trek your way through the swamp. There you see two things, which do you go to? A.) A Witches hut. B.) A seperate secret enterence to the city.").upper().strip()
+    while True:
+        path = input_type("You trek your way through the swamp. There you see two things, which do you go to? A.) A Witches hut. B.) A seperate secret enterence to the city.").upper().strip()
+        if path in ("A", "B"):
+            break
+        type_print("Please choose A or B")
     if path == "A":
-        witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up? or C. Leave (recommended)").upper().strip()
-        if witch == "A":
-            type_print("You tried to kill her, but failed as she suddenly rolled over. This woke her up.")
-            return combat(player, 40, 10, "Witch")
-        elif witch == "B":
-            type_print("You really scared her. She's enraged.")
-            return combat(player, 50, 12, "Witch")
-        elif witch == "C":
-            type_print("You decided to leave (very smart)")
-            input_type("Press enter to continue")
-            return choose_a_path(player)
-        else:
-            type_print("Please type A,  B or C.")
-            return swamp(player)
+        while True:
+            witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up? or C. Leave (recommended)").upper().strip()
+            if witch == "A":
+                type_print("You tried to kill her, but failed as she suddenly rolled over. This woke her up.")
+                return combat(player, 40, 10, "Witch")
+            elif witch == "B":
+                type_print("You really scared her. She's enraged.")
+                return combat(player, 50, 12, "Witch")
+            elif witch == "C":
+                type_print("You decided to leave (very smart)")
+                input_type("Press enter to continue")
+                return choose_a_path(player)
+            else:
+                type_print("Please type A,  B or C.")
     elif path == "B":
         type_print("You find a hidden enterence into the city")
         input_type("Press enter to continue")
         return inside_city(player)
-    else:
-        type_print("Please choose A or B")
-        return swamp(player)
+
 
 def inside_city(player):
     clear()
@@ -248,5 +250,6 @@ def sealed_ending(player):
             return True
         if choice == "B":
             clear()
+            type_print("THANKS FOR PLAYING!")
             return False
-        type_print("Thanks for playing!")
+        type_print("Please choose A, or B").upper().strip()

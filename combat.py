@@ -44,6 +44,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
         elif choice == "C":
             if use_potion(player) == False:
                 type_print("You fumble in your pack and waste your turn :sob:")
+                continue
             damage_dealt = random.randint(enemy_damage -2, enemy_damage +2)
             player["health"] = max(0, player["health"] - damage_dealt)
             type_print(f"The {enemy_name} did {damage_dealt} damage while you were fooling around! you have {player['health']} health left! ")
