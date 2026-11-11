@@ -7,7 +7,7 @@ from ui import clear, input_type, type_print  # type: ignore
 
 
 def choose_a_path(player):
-    path = input_type("\nNow, where would you like to go? A: A shimmering city. B: A dark forest. C: Through the swamp. I: Inventory P: Drink a health pot ").upper().strip()
+    path = input_type("\nNow, where would you like to go? A. A shimmering city. B. A dark forest. C. Through the swamp. I. Inventory P. Drink a health pot ").upper().strip()
     if path == "A":
         clear()
         return shimmering_city(player)
@@ -27,7 +27,7 @@ def choose_a_path(player):
         return choose_a_path(player)
     else:
         clear()
-        type_print("Please choose A, B, or C, I, or P")
+        type_print("Please choose A. B. C. I. or P")
         
         return choose_a_path(player)
 
@@ -35,7 +35,7 @@ def choose_a_path(player):
 def shimmering_city(player):
     clear()
     type_print("You make your way down to the city... unfortunately you somehow get stopped by the guard for not having any ID.")
-    guards = input_type("Do you A. Turn back to the crossroads. B: Say you'll turn back and try to sneak past them. C: Fight ").upper().strip()
+    guards = input_type("Do you A. Turn back to the crossroads. B. Say you'll turn back and try to sneak past them. C. Fight ").upper().strip()
     if guards == "A":
         clear()
         return choose_a_path(player)
@@ -67,13 +67,13 @@ def dark_forest(player):
 
 def swamp(player):
     while True:
-        path = input_type("You trek your way through the swamp. There you see two things, which do you go to? A.) A Witches hut. B.) A seperate secret enterence to the city.").upper().strip()
+        path = input_type("You trek your way through the swamp. There you see two things, which do you go to? A. A Witches hut. or B. A seperate secret enterence to the city.").upper().strip()
         if path in ("A", "B"):
             break
         type_print("Please choose A or B")
     if path == "A":
         while True:
-            witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up? or C. Leave (recommended)").upper().strip()
+            witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up? or C. Leave ").upper().strip()
             if witch == "A":
                 type_print("You tried to kill her, but failed as she suddenly rolled over. This woke her up.")
                 return combat(player, 40, 10, "Witch")
@@ -85,7 +85,7 @@ def swamp(player):
                 input_type("Press enter to continue")
                 return choose_a_path(player)
             else:
-                type_print("Please type A,  B or C.")
+                type_print("Please type A, B, or C.")
     elif path == "B":
         type_print("You find a hidden enterence into the city")
         input_type("Press enter to continue")
@@ -96,7 +96,7 @@ def inside_city(player):
     clear()
     type_print("You now sneak past the gates into the shimmering city")
     type_print("It is beautiful, unlike any city you have ever seen.")
-    choice = input_type("What do you do? A.) Look for the blacksmith. B.) Wander around. C.) Look at the giant grate D. Leave").upper().strip()
+    choice = input_type("What do you do? A. Look for the blacksmith. B. Wander around. C. Look at the giant grate or D. Leave").upper().strip()
     if choice == "A":
         clear()
         return shop(player)
@@ -137,7 +137,7 @@ def village(player):
     clear()
     type_print("The tunnel opens into a street...?")
     type_print("Above you, far above, you can hear the ground shake above you.")
-    choice = input_type("What do you do? A.) Visit the market B.) Talk to a local C.) Keep walking D.) Try to go back up").strip().upper()
+    choice = input_type("What do you do? A. Visit the market B. Talk to a local C. Keep walking or D. Try to go back up").strip().upper()
     if choice == "A":
         clear()
         return merchant(player)
@@ -162,7 +162,7 @@ def local(player):
     type_print("A thin man leans against a wall. He looks like he hasnt slept in a while...")
     type_print("'You killed the warden' he says 'we heard it fall from here'.")
     type_print("'Do you know how much it did for us?'")
-    choice = input_type("A.) It was guarding this place B.) It was keeping something out. C.) Say nothing").upper().strip()
+    choice = input_type("A. It was guarding this place B. It was keeping something out. or C. Say nothing").upper().strip()
     if choice == "A":
         type_print("'No,' he says. 'it was keeping something in'")
     elif choice == "B":
@@ -177,7 +177,7 @@ def local(player):
 def far_underground(player):
     clear()
     type_print("The streets narrow.")
-    choice = input_type("A.) Walk deeper. B.) Approach the sealed gate. C.) go back.").upper().strip()
+    choice = input_type("A. Walk deeper. B. Approach the sealed gate. or C. go back.").upper().strip()
     if choice == "A":
         clear()
         roll = random.randint(1, 10)
@@ -219,7 +219,7 @@ def sealed_gate(player):
     type_print("An enormous stone gate stands here.")
     type_print(" Many chains lay snapped on the floor. A couple remain.")
     type_print("You hear something breathe.")
-    choice = input_type("A.) Break the last chains. B.) Leave").upper().strip()
+    choice = input_type("A. Break the last chains. B. Leave").upper().strip()
     if choice == "A":
         clear()
         type_print("The last chain falls. The gate opens")
@@ -231,7 +231,7 @@ def sealed_gate(player):
         clear()
         return far_underground(player)
     else:
-        type_print("Please choose A or B")
+        type_print("Please choose A, or B")
         input_type("Press enter to continue")
         return sealed_gate(player)
     
@@ -244,7 +244,7 @@ def sealed_ending(player):
     type_print("Congratulations! You have completed the game!")
     type_print("\nTHE END\n")
     while True:
-        choice = input_type("A.) Play again. B.) Close")
+        choice = input_type("A. Play again. or B. Close")
         if choice == "A":
             clear()
             return True
@@ -252,4 +252,4 @@ def sealed_ending(player):
             clear()
             type_print("THANKS FOR PLAYING!")
             return False
-        type_print("Please choose A, or B").upper().strip()
+        type_print("Please choose A. or B").upper().strip()

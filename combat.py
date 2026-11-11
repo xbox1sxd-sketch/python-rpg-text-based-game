@@ -16,7 +16,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
     type_print(f"You encounter a {enemy_name}.")
     type_print(f"It has {enemy_health} health!")
     while enemy_health > 0 and player["health"] > 0:
-        choice = input_type("Would you like to A.) Attack or B.) Flee C.) Use a Potion ").strip().upper()
+        choice = input_type("Would you like to A. Attack, B. Flee, or C. Use a Potion ").strip().upper()
         if choice == "A":
             enemy_health = max(0, enemy_health - player["damage"])
             type_print(f"You did {player['damage']} damage!")
@@ -111,7 +111,7 @@ def dungeon(player):
     floor = player["dungeon_floor"]
     if player["warden_dead"] and floor == 0:
         type_print("The tunnel is quiet, the tunnel to the Sealed Village is Open")
-        choice = input_type("A.) Walk straight to the village. B.) Fight your way down again. C.) Leave").strip().upper()
+        choice = input_type("A. Walk straight to the village, B. Fight your way down again, or C. Leave").strip().upper()
         if choice == "A":
             clear()
             return village(player)
@@ -140,7 +140,7 @@ def dungeon(player):
             clear()
             return inside_city(player)
         elif choice != "A":
-            type_print("Please choose A or B.")
+            type_print("Please choose A. or B.")
             input_type("Press enter to continue")
             return dungeon(player)
     clear()

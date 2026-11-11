@@ -7,7 +7,7 @@ def shop(player):
     clear()
     type_print("An exhausted looking blacksmith looks up from this anvil? 'What'll it be' he says")
     type_print(f"You have {player['gold']} gold (earn more from fighting).")
-    choice = input_type("A: A health potion (10g). B: A Gold Scythe (+3 dmg, 30g) Or C: Iron Dagger (+1 dmg, 15g) D: War Axe (+5 dmg, 60g) E: Leave ").upper().strip()
+    choice = input_type("A. A health potion (10g). B. A Gold Scythe (+3 dmg, 30g) Or C. Iron Dagger (+1 dmg, 15g) D: War Axe (+5 dmg, 60g) E: Leave ").upper().strip()
     if choice == "A":
         if player["gold"] >= 10:
             player["gold"] -= 10
@@ -71,7 +71,7 @@ def shop(player):
     elif choice == "E":
         return inside_city(player)
     else:
-        type_print("Please choose A, B, C, D, or E")
+        type_print("Please choose A. B. C. D. or E.")
         input_type("Press enter to continue")
         return shop(player)
 
@@ -82,7 +82,7 @@ def merchant(player):
     type_print("An old woman sits behind a counter. Her eyes are pale, she looks tired.")
     type_print("'You came from up there' she says. Haven't seen one of yem since the 3rd epoch.")
     type_print(f"You have {player['gold']} gold.")
-    choice = input_type("A.) Health potion(8g). B.) Whetstone(+2 dmg, 40g) C.) Iron Heart(+25 max health, 50g) D.) Leave").strip().upper()
+    choice = input_type("A. Health potion(8g). B. Whetstone(+2 dmg, 40g) C. Iron Heart(+25 max health, 50g) or D. Leave").strip().upper()
     if choice == "A":
         if player["gold"] >= 8:
             player["gold"] -= 8
@@ -131,6 +131,6 @@ def merchant(player):
         clear()
         return village(player)
     else:
-        type_print("Please choose A, B, C, or D.")
+        type_print("Please choose A. B. C. or D.")
         input_type("Press enter to continue")
         return merchant(player)
