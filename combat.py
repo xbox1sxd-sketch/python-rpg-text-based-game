@@ -27,6 +27,12 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
                 type_print(f"The {enemy_name} did {damage_dealt} damage! You have {player['health']} health left!" )
         elif choice == "B":
             type_print("You scream and run away")
+            base_damage =  random.randint(enemy_damage -2, enemy_damage + 2)
+            flee_damage = max(1, base_damage) * 2
+            player["health"] = max(0, player["health"] - flee_damage)
+            type_print(f"The {enemy_name} hits you as you flee, dealing {flee_damage} damage! You have {player['health']} health left.")
+            if player["health"] <= 0:
+                break
             target = flee_to if flee_to is not None else next
             if target == "city":
                 return inside_city(player)
