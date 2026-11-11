@@ -2,11 +2,13 @@ import random
 
 from combat import combat, dungeon  # type: ignore
 from items import open_chest, show_inventory, use_potion  # type: ignore
+from save_load import delete_save, save_game  # type: ignore
 from Shops import merchant, shop  # type: ignore
 from ui import clear, input_type, type_print  # type: ignore
 
 
 def choose_a_path(player):
+    save_game(player)
     path = input_type("\nNow, where would you like to go? A. A shimmering city. B. A dark forest. C. Through the swamp. I. Inventory P. Drink a health pot ").upper().strip()
     if path == "A":
         clear()
@@ -250,6 +252,7 @@ def sealed_ending(player):
             return True
         if choice == "B":
             clear()
+            delete_save()
             type_print("THANKS FOR PLAYING!")
             return False
         type_print("Please choose A. or B").upper().strip()

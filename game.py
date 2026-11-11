@@ -1,3 +1,4 @@
+from save_load import delete_save, load_game, save_game  # type: ignore
 from ui import clear, input_type, type_print  # type: ignore
 from world import choose_a_path  # type: ignore
 
@@ -42,6 +43,20 @@ def play_beginning():
 
 
 def start_game():
+    saved_player = load_game()
+    if saved_player is not None:
+        type_print("A save file has been found!")
+        choice = input_type("A. Continue, B. New Game ").upper().strip()
+        if choice == "A":
+            clear()
+            type_print(f"Welcome back, {saved_player['name']}")
+            return choose_a_path(saved_player)
+        if choice == "B":
+            delete_save()
+            clear()
+            type_print("Creating a new game...")
+            input_type("Press enter to continue")
+            clear()
     player_name = get_name()
     player_health, player_damage = play_beginning()
     player = {
@@ -59,6 +74,7 @@ def start_game():
     }   
     type_print(f"\nWelcome {player_name}!")
     type_print(f"Your starting health is {player_health} and your starting damage is {player_damage}.")
+    save_game(player)
     return choose_a_path(player)
 
 def main():
