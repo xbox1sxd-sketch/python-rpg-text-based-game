@@ -11,7 +11,10 @@ def save_game(player):
 def load_game():
     if os.path.exists(SAVE_FILE):
         with open(SAVE_FILE, "r") as f:
-            return json.load(f)
+            player = json.load(f)
+            if "armour" not in player:
+                player["armor"] = 0
+            return player
     return None
 
 def delete_save():

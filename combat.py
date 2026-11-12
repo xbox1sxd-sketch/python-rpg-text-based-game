@@ -4,6 +4,9 @@ from items import pickup, use_potion  # type: ignore
 from ui import clear, input_type, type_print  # type: ignore
 
 
+def calc_enemy_damage(player, enemy_damage):
+    base = random.randint(enemy_damage -2, enemy_damage + 2)
+    return max(1, base - player.get("armor", 0))
 def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", flee_to = None):
     from world import (  # type: ignore
         choose_a_path,
@@ -16,18 +19,18 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
     type_print(f"You encounter a {enemy_name}.")
     type_print(f"It has {enemy_health} health!")
     while enemy_health > 0 and player["health"] > 0:
-        choice = input_type("Would you like to A. Attack, B. Flee, or C. Use a Potion ").strip().upper()
+        choice = input_type("Would you like to A. Attack, B. Flee, C. Use a Potion, or I. Inventory ").strip().upper()
         if choice == "A":
             enemy_health = max(0, enemy_health - player["damage"])
             type_print(f"You did {player['damage']} damage!")
             type_print(f"It has {enemy_health} health left!")
-            damage_dealt = random.randint(enemy_damage - 2, enemy_damage + 2)
+            damage_dealt = calc_enemy_damage(enemy_damage - 2, enemy_damage + 2)
             if enemy_health > 0:
                 player["health"] = max(0, player["health"] - damage_dealt)
                 type_print(f"The {enemy_name} did {damage_dealt} damage! You have {player['health']} health left!" )
         elif choice == "B":
             type_print("You scream and run away")
-            base_damage =  random.randint(enemy_damage -2, enemy_damage + 2)
+            base_damage =  calc_enemy_damage(enemy_damage -2, enemy_damage + 2)
             flee_damage = max(1, base_damage) * 2
             player["health"] = max(0, player["health"] - flee_damage)
             type_print(f"The {enemy_name} hits you as you flee, dealing {flee_damage} damage! You have {player['health']} health left.")
@@ -45,9 +48,13 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             if use_potion(player) == False:
                 type_print("You fumble in your pack and waste your turn :sob:")
                 continue
-            damage_dealt = random.randint(enemy_damage -2, enemy_damage +2)
+            damage_dealt = calc_enemy_damage(enemy_damage -2, enemy_damage +2)
             player["health"] = max(0, player["health"] - damage_dealt)
             type_print(f"The {enemy_name} did {damage_dealt} damage while you were fooling around! you have {player['health']} health left! ")
+        elif choice == "I":
+            from items import show_inventory
+            show_inventory(player)
+            continue
         else:
             type_print("Please choose A, B or C")
     if enemy_health <= 0:

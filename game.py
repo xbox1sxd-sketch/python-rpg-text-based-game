@@ -3,7 +3,7 @@ from ui import clear, input_type, type_print  # type: ignore
 from world import choose_a_path  # type: ignore
 
 type_print("\n\nWelcome to my text based Adventure Game!")
-type_print("\n\nI hope you enjoy!\n\n")
+type_print("\nI hope you enjoy!\n\n")
     
 
 def get_name():
@@ -71,6 +71,7 @@ def start_game():
     "max_health": player_health,
     "inventory": [],
     "gold": 0,
+    "armor": 0,
     }   
     type_print(f"\nWelcome {player_name}!")
     type_print(f"Your starting health is {player_health} and your starting damage is {player_damage}.")

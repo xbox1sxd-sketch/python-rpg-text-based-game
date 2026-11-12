@@ -7,7 +7,7 @@ def shop(player):
     clear()
     type_print("An exhausted looking blacksmith looks up from this anvil? 'What'll it be' he says")
     type_print(f"You have {player['gold']} gold (earn more from fighting).")
-    choice = input_type("A. A health potion (10g). B. A Gold Scythe (+3 dmg, 30g) Or C. Iron Dagger (+1 dmg, 15g) D. War Axe (+5 dmg, 60g) F. Sell Weapons I. inventory or E: Leave ").upper().strip()
+    choice = input_type("A. A health potion (10g). B. A Gold Scythe (+3 dmg, 30g) Or C. Iron Dagger (+1 dmg, 15g) D. War Axe (+5 dmg, 60g) G. Leather Armour(+2 armour, 20g) H. Iron armour(+4 armour, 50g) F. Sell Weapons I. inventory or E: Leave ").upper().strip()
     if choice == "A":
         if player["gold"] >= 10:
             player["gold"] -= 10
@@ -68,6 +68,37 @@ def shop(player):
             type_print("You don't have enough gold :(")
             input_type("Press enter to continue")
             return shop(player)
+    elif choice == "G":
+        if "Leather Armour" in player["inventory"]:
+            type_print("You already have this armour")
+            input_type("press enter to continue")
+            return shop(player)
+        if player["gold"] >= 20:
+            player["gold"] -= 20
+            player["gold"] += 2
+            player["inventory"].append("Leather Armour")
+            type_print(f"Your armour is now {player['armour']}")
+            input_type("press enter to continue")
+            return shop(player)
+        else:
+            type_print("You don't have enough gold [LOL]")
+            input_type("press enter to continue")
+            return shop(player)
+    elif choice == "H":
+        if "Iron Armour" in player["inventory"]:
+            type_print("You already have this idiot")
+            input_type("press enter to continue")
+            return shop(player)
+        if player["gold"] >= 50:
+            player["gold"] -= 50
+            player["armor"] += 4
+            player["inventory"].append("Iron Armor")
+            type_print(f"Your armour is now {player['armour']}")
+            input_type("press enter to continue")
+            return shop(player)
+        else:
+            type_print("You dont have enough gold [go fight buddy]")
+            input_type("press enter to continue")
     elif choice == "E":
         return inside_city(player)
     elif choice == "I":

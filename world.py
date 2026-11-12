@@ -3,7 +3,7 @@ import random
 from combat import combat, dungeon  # type: ignore
 from items import open_chest, show_inventory, use_potion  # type: ignore
 from save_load import delete_save, save_game  # type: ignore
-from Shops import merchant, shop  # type: ignore
+from shops import merchant, shop  # type: ignore
 from ui import clear, input_type, type_print  # type: ignore
 
 
