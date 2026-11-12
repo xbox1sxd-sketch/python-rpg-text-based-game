@@ -7,7 +7,7 @@ def shop(player):
     clear()
     type_print("An exhausted looking blacksmith looks up from this anvil? 'What'll it be' he says")
     type_print(f"You have {player['gold']} gold (earn more from fighting).")
-    choice = input_type("A. A health potion (10g). B. A Gold Scythe (+3 dmg, 30g) Or C. Iron Dagger (+1 dmg, 15g) D: War Axe (+5 dmg, 60g) E: Leave ").upper().strip()
+    choice = input_type("A. A health potion (10g). B. A Gold Scythe (+3 dmg, 30g) Or C. Iron Dagger (+1 dmg, 15g) D. War Axe (+5 dmg, 60g) F. Sell Weapons I. inventory or E: Leave ").upper().strip()
     if choice == "A":
         if player["gold"] >= 10:
             player["gold"] -= 10
@@ -70,6 +70,13 @@ def shop(player):
             return shop(player)
     elif choice == "E":
         return inside_city(player)
+    elif choice == "I":
+        from items import show_inventory
+        show_inventory(player)
+        return shop(player)
+    elif choice == "F":
+        sell_weapon(player)
+        return shop(player)
     else:
         type_print("Please choose A. B. C. D. or E.")
         input_type("Press enter to continue")
@@ -82,7 +89,7 @@ def merchant(player):
     type_print("An old woman sits behind a counter. Her eyes are pale, she looks tired.")
     type_print("'You came from up there' she says. Haven't seen one of yem since the 3rd epoch.")
     type_print(f"You have {player['gold']} gold.")
-    choice = input_type("A. Health potion(8g). B. Whetstone(+2 dmg, 40g) C. Iron Heart(+25 max health, 50g) or D. Leave").strip().upper()
+    choice = input_type("A. Health potion(8g). B. Whetstone(+2 dmg, 40g) C. Iron Heart(+25 max health, 50g) D. Leave F. Sell weapons or I. Inventory").strip().upper()
     if choice == "A":
         if player["gold"] >= 8:
             player["gold"] -= 8
@@ -126,7 +133,13 @@ def merchant(player):
             type_print("You don't have enough gold")
             input_type("Press enter to continue")
             return merchant(player)
-
+    elif choice == "I":
+        from items import show_inventory
+        show_inventory(player)
+        return merchant(player)
+    elif choice =="F":
+        sell_weapon(player)
+        return merchant(player)
     elif choice == "D":
         clear()
         return village(player)
@@ -134,3 +147,40 @@ def merchant(player):
         type_print("Please choose A. B. C. or D.")
         input_type("Press enter to continue")
         return merchant(player)
+
+
+
+def sell_weapon(player):
+    clear()
+    type_print("Which weapon would you like to sell back?")
+    type_print("A. Iron Dagger (sells for 7g)")
+    type_print("B. Gold Scythe (sells for 15g)")
+    type_print("C. War Axe (sells for 30g)")
+    type_print("D. Silver Scythe (sells for 10g)")
+    type_print("E. Leave")
+    choice = input_type("> ")
+    if choice == "A" and "Iron Dagger" in player["inventory"]:
+        player["inventory"].remove("Iron Dagger")
+        player["damage"] -= 1
+        player["gold"] += 7
+        type_print("Sold iron dagger for 7 gold. Your damage decreased.")
+    elif choice == "B" and "Gold Scythe" in player["inventory"]:
+        player["inventory"].remove("Gold Scythe")
+        player["damage"] -= 3
+        player["gold"] += 15
+        type_print("Sold Gold Scythe for 15 gold. Your damage decreased.")
+    elif choice == "C" and "War Axe" in player["inventory"]:
+        player["inventory"].remove("War Axe")
+        player["damage"] -= 5
+        player["gold"] += 30
+        type_print("Sold war Axe for 30 gold. Your damage decreased.")
+    elif choice == "D" and "Silver Scythe" in player["inventory"]:
+            player["inventory"].remove("Silver Scythe")
+            player["damage"] -= 2
+            player["gold"] += 30
+            type_print("Sold Silver Scythe for 10 gold. Your damage decreased.")
+    elif choice == "E":
+        return
+    else:
+        type_print("Either, you dont have that weapon, or typed the wrong letter. Anyway, im dissappointed.")
+    input_type("Press enter to continue")
