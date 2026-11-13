@@ -12,9 +12,21 @@ def load_game():
     if os.path.exists(SAVE_FILE):
         with open(SAVE_FILE, "r") as f:
             player = json.load(f)
-            if "armour" not in player:
-                player["armour"] = 0
+            defaults = {
+                "armour": 0,
+                "warden_dead": False,
+                "sealed_one_dead": False,
+                "whetstone_bought": False,
+                "iron_heart_bought": False,
+                "dungeon_floor": 0,
+                "gold": 0,
+                "inventory": [],
+            }
+            for key, value in defaults.items():
+                if key not in player:
+                    player[key] = value
             return player
+                    
     return None
 
 def delete_save():

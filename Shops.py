@@ -96,10 +96,10 @@ def shop(player):
             type_print(f"Your armour is now {player['armour']}")
             input_type("press enter to continue")
             return shop(player)
-            return shop(player)
         else:
             type_print("You dont have enough gold [go fight buddy]")
             input_type("press enter to continue")
+            return shop(player)
     elif choice == "E":
         return inside_city(player)
     elif choice == "I":

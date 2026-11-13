@@ -246,13 +246,14 @@ def sealed_ending(player):
     type_print("Congratulations! You have completed the game!")
     type_print("\nTHE END\n")
     while True:
-        choice = input_type("A. Play again. or B. Close")
+        choice = input_type("A. Play again. or B. Close").upper().strip()
         if choice == "A":
             clear()
+            delete_save()
             return True
         if choice == "B":
             clear()
             delete_save()
             type_print("THANKS FOR PLAYING!")
             return False
-        type_print("Please choose A. or B").upper().strip()
+        type_print("Please choose A. or B")
