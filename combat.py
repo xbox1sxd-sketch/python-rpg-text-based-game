@@ -6,7 +6,9 @@ from ui import clear, input_type, type_print  # type: ignore
 
 def calc_enemy_damage(player, enemy_damage):
     base = random.randint(enemy_damage -2, enemy_damage + 2)
-    return max(1, base - player.get("armor", 0))
+    return max(1, base - player.get("armour", 0))
+
+
 def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", flee_to = None):
     from world import (  # type: ignore
         choose_a_path,

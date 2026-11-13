@@ -71,7 +71,7 @@ def start_game():
     "max_health": player_health,
     "inventory": [],
     "gold": 0,
-    "armor": 0,
+    "armour": 0,
     }   
     type_print(f"\nWelcome {player_name}!")
     type_print(f"Your starting health is {player_health} and your starting damage is {player_damage}.")

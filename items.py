@@ -13,7 +13,7 @@ def show_inventory(player):
     type_print(f"\n Gold: {player['gold']}")
     type_print(f"Health: {player['health']}/{player['max_health']}")
     type_print(f"Damage: {player['damage']}")
-    type_print(f"Armor: {player['armor']}")
+    type_print(f"Armour: {player['armour']}")
     input_type("Press Enter to continue")
     clear()
 

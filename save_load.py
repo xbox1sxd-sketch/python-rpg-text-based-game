@@ -13,7 +13,7 @@ def load_game():
         with open(SAVE_FILE, "r") as f:
             player = json.load(f)
             if "armour" not in player:
-                player["armor"] = 0
+                player["armour"] = 0
             return player
     return None
 
