@@ -49,6 +49,7 @@ def shimmering_city(player):
         clear()
         return combat(player, 30, 5, "guard", "city", "crossroads")
     else:
+        clear()
         type_print("Please enter A. B. or C.")
         input_type("Press enter to continue")
         return shimmering_city(player)
@@ -88,6 +89,7 @@ def swamp(player):
                 return choose_a_path(player)
             else:
                 type_print("Please type A, B, or C.")
+                input_type("Press enter to continue")
     elif path == "B":
         type_print("You find a hidden enterence into the city")
         input_type("Press enter to continue")
@@ -191,10 +193,10 @@ def far_underground(player):
             return combat(player, 55, 16, "ghoul", "HiddenCity")
         elif roll <= 6:
             type_print("A child-shaped shadow runs past you.")
-            return combat(player, 50, 15, "Pale Child", "HiddenCity")
+            return combat(player, 50, 15, "pale child", "HiddenCity")
         elif roll <= 7:
             type_print("A watcher in armor approaches")
-            return combat(player, 80, 14, "Watcher", "HiddenCity")
+            return combat(player, 80, 14, "watcher", "HiddenCity")
         elif roll <= 8:
             type_print("A small thing crawls over.")
             return combat(player, 70, 12, "better crawler", "HiddenCity")
