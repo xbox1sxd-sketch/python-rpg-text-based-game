@@ -20,6 +20,7 @@ def load_game():
                 "iron_heart_bought": False,
                 "dungeon_floor": 0,
                 "gold": 0,
+                "bandit_leader_dead": False,
                 "inventory": [],
             }
             for key, value in defaults.items():

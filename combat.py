@@ -11,6 +11,7 @@ def calc_enemy_damage(player, enemy_damage):
 
 def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", flee_to = None):
     from world import (  # type: ignore
+        bandit_camp,
         choose_a_path,
         dungeon,
         far_underground,
@@ -75,6 +76,14 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             return sealed_ending(player)
         enemy_drop(player, enemy_name)
         input_type("Press enter to continue")
+        if enemy_name == "Bandit Leader":
+            player["bandit_leader_dead"] = True
+            player["damage"] += 6
+            pickup(player, "Bandit's Bat")
+            type_print("You defeat the bandit Leader! You steal his big bat.")
+            input_type("Press enter to continue")
+            return bandit_camp
+        
         if next == "city":
             return inside_city(player)
         elif next == "Dungeon":
@@ -82,6 +91,8 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             return dungeon(player)
         elif next == "HiddenCity":
             return far_underground(player)
+        elif next == "BanditCamp":
+            return bandit_camp(player)
         return choose_a_path(player)
     elif player["health"] <= 0:
         type_print("You lost LOL")

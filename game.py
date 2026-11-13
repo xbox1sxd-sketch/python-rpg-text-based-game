@@ -75,6 +75,7 @@ def start_game():
     "inventory": [],
     "gold": 0,
     "armour": 0,
+    "bandit_leader_dead": False,
     }   
     type_print(f"\nWelcome {player_name}!")
     type_print(f"Your starting health is {player_health} and your starting damage is {player_damage}.")

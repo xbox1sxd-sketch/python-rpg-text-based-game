@@ -55,6 +55,19 @@ def shimmering_city(player):
         return shimmering_city(player)
 
 def dark_forest(player):
+    clear()
+    type_print("You wander into the dark forest..")
+    while True:
+        choice = input_type("A. Wander around. B. Follow some tracks you see. C. Leave").upper().strip()
+        if choice in ("A", "B", "C"):
+            break
+        type_print("Please choose A, B, or C")
+        if choice =="B":
+            return bandit_camp(player)
+        elif choice == "C":
+            return choose_a_path(player)
+            
+    
     encounter = random.randint(1, 10)
     if 1 <= encounter <= 6:
         type_print("A wolf approaches you!")
@@ -67,6 +80,38 @@ def dark_forest(player):
         open_chest(player)
         input_type("Press enter to continue")
         return choose_a_path(player)
+
+def bandit_camp(player):
+    clear()
+    if player.get("bandit_leader_dead"):
+        type_print("The camp is abandoned.. theres nothing left.")
+        return choose_a_path(player)
+    type_print("You see a camp.. they appear to be.. bandits of some sort.")
+    type_print("THEY SPOT YOU!")
+    choice = input_type("Do you A. Fight, B. Call for their leader, or C. Leave").upper().strip()
+    if choice == "A":
+        roll = random.randint(1, 10)
+        if roll <= 5:
+            type_print("A bandit scout runs at you!")
+            return combat(player, 40, 8, "Bandit Scout", "BanditCamp")
+        elif roll <= 8:
+            type_print("A Big boy bandit blocks your path.")
+            return combat(player, 60, 10, "Bandit Gangster", "BanditCamp")
+        else:
+            type_print("A bandit Giant charges at you!")
+            return combat(player, 80, 12, "Bandit Giant", "BanditCamp")
+    elif choice == "B":
+        type_print("The bandits call their leader.")
+        type_print("You *DARE* challenge me? He bellows.")
+        return combat (player, 120, 15, "Bandit Leader", "BanditCamp")
+    elif choice == "C":
+        return dark_forest(player)
+    else:
+        type_print("Please choose A, B, or C.")
+        input_type("Press enter to continue")
+        return bandit_camp(player)
+                       
+    
 
 def swamp(player):
     while True:
