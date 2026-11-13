@@ -75,7 +75,7 @@ def shop(player):
             return shop(player)
         if player["gold"] >= 20:
             player["gold"] -= 20
-            player["gold"] += 2
+            player["armour"] += 2
             player["inventory"].append("Leather Armour")
             type_print(f"Your armour is now {player['armour']}")
             input_type("press enter to continue")
@@ -91,10 +91,11 @@ def shop(player):
             return shop(player)
         if player["gold"] >= 50:
             player["gold"] -= 50
-            player["armor"] += 4
-            player["inventory"].append("Iron Armor")
+            player["armour"] += 4
+            player["inventory"].append("Iron Armour")
             type_print(f"Your armour is now {player['armour']}")
             input_type("press enter to continue")
+            return shop(player)
             return shop(player)
         else:
             type_print("You dont have enough gold [go fight buddy]")

@@ -26,13 +26,13 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             enemy_health = max(0, enemy_health - player["damage"])
             type_print(f"You did {player['damage']} damage!")
             type_print(f"It has {enemy_health} health left!")
-            damage_dealt = calc_enemy_damage(enemy_damage - 2, enemy_damage + 2)
+            damage_dealt = calc_enemy_damage(player, enemy_damage)
             if enemy_health > 0:
                 player["health"] = max(0, player["health"] - damage_dealt)
                 type_print(f"The {enemy_name} did {damage_dealt} damage! You have {player['health']} health left!" )
         elif choice == "B":
             type_print("You scream and run away")
-            base_damage =  calc_enemy_damage(enemy_damage -2, enemy_damage + 2)
+            base_damage =  calc_enemy_damage(player, enemy_damage)
             flee_damage = max(1, base_damage) * 2
             player["health"] = max(0, player["health"] - flee_damage)
             type_print(f"The {enemy_name} hits you as you flee, dealing {flee_damage} damage! You have {player['health']} health left.")
@@ -50,7 +50,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             if use_potion(player) == False:
                 type_print("You fumble in your pack and waste your turn :sob:")
                 continue
-            damage_dealt = calc_enemy_damage(enemy_damage -2, enemy_damage +2)
+            damage_dealt = calc_enemy_damage(player, enemy_damage)
             player["health"] = max(0, player["health"] - damage_dealt)
             type_print(f"The {enemy_name} did {damage_dealt} damage while you were fooling around! you have {player['health']} health left! ")
         elif choice == "I":
