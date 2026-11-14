@@ -9,7 +9,7 @@ from ui import clear, input_type, type_print  # type: ignore
 
 def choose_a_path(player):
     save_game(player)
-    path = input_type("\nNow, where would you like to go? A. A shimmering city. B. A dark forest. C. Through the swamp. I. Inventory P. Drink a health pot R. Rest(10g) ").upper().strip()
+    path = input_type("\nNow, where would you like to go? A. A shimmering city. B. A dark forest. C. Through the swamp. D. Colosseum. I. Inventory P. Drink a health pot R. Rest(10g) ").upper().strip()
     if path == "A":
         clear()
         return shimmering_city(player)
@@ -19,6 +19,9 @@ def choose_a_path(player):
     elif path == "C":
         clear()
         return swamp(player)
+    elif path == "D":
+        clear()
+        return colosseum(player)
     elif path == "I":
         clear()
         show_inventory(player)
@@ -305,6 +308,37 @@ def sealed_gate(player):
         input_type("Press ENTER to continue")
         return sealed_gate(player)
     
+def colosseum(player):
+    clear()
+    wave = player.get("arena_wave", 0)
+    if wave == 0:
+        type_print(f"You enter the grand Colosseum. They mistake you for a participant and quickly escort you inside.")
+    else:
+        type_print(f"You are currently on Wave {wave}. You hear the crowd chanting for your death.")
+    choice = input_type("A. Fight the next wave. B. Leave the Colosseum.").upper().strip()
+    if choice == "A":
+        player["arena_wave"] += 1
+        next_wave = player["arena_wave"]
+        enemy_hp = 30 + (next_wave * 15)
+        enemy_dmg = 5 + (next_wave * 2)
+        type_print(f"A gladiator steps into the arena. (HP: {enemy_hp}, Damage: {enemy_dmg})")
+        return combat(player, enemy_hp, enemy_dmg, "Gladiator", "Colosseum")
+    elif choice == "B":
+        if wave > 0:
+            reward = wave * 30
+            player["gold"] += reward
+            type_print(f"You leave the arena. For surviving {wave} waves, you are awarded {reward} gold!")
+            player["arena_wave"] = 0
+        else:
+            type_print("You chickened out and left the Colosseum")
+            
+        input_type("Press ENTER to continue")
+        return choose_a_path(player)
+    else:
+        type_print("Please choose A or B.")
+        input_type("Press ENTER to continue")
+        return colosseum(player)
+        
     
 def sealed_ending(player):
     clear()

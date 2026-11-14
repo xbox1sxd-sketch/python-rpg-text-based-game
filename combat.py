@@ -18,6 +18,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
         inside_city,
         sealed_ending,
         village,
+        colosseum,
     )
     type_print(f"You encounter a {enemy_name}.")
     type_print(f"It has {enemy_health} health!")
@@ -110,6 +111,8 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             return far_underground(player)
         elif next == "BanditCamp":
             return bandit_camp(player)
+        elif next == "Colosseum":
+            return colosseum(player)
         return choose_a_path(player)
     elif player["health"] <= 0:
         type_print("You lost LOL")
@@ -117,6 +120,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
         player["health"] = player["max_health"] // 2
         player["gold"] = player["gold"] // 2
         player["dungeon_floor"] = 0
+        player["arena_wave"] = 0
         input_type("Press ENTER to continue")
         return choose_a_path(player)
     

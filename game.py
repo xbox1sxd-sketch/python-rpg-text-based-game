@@ -75,6 +75,7 @@ def start_game():
     "inventory": [],
     "gold": 0,
     "armour": 0,
+    "arena_wave": 0,
     "bandit_leader_dead": False,
     "guardian_dead": False,
     }   
