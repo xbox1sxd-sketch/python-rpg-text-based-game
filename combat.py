@@ -6,7 +6,7 @@ from ui import clear, input_type, type_print  # type: ignore
 
 def calc_enemy_damage(player, enemy_damage):
     base = random.randint(enemy_damage -2, enemy_damage + 2)
-    return max(1, base - player.get("armor", 0))
+    return max(1, base - player.get("armour", 0))
 
 
 def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", flee_to = None):
@@ -66,15 +66,18 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             show_inventory(player)
             continue
         else:
-            type_print("Please choose A, B or C")
+            type_print("Please choose A, B, C, or I")
     if enemy_health <= 0:
         type_print("YOU WON!")
         if enemy_name == "Dungeon Guardian":
             player["guardian_dead"] = True
-            player["armor"] += 3
+            player["armour"] += 3
             pickup(player, "Guardian Shield")
-            type_print("You defeated the Guardian! You took its shield (+3 armor)")
+            type_print("You defeated the Guardian! You took its shield (+3 armour)")
             input_type("Press enter to continue")
+            if next == "Dungeon":
+                player["dungeon_floor"] += 3
+                return dungeon(player)
         if enemy_name == "Warden":
             player["warden_dead"] = True
             player["damage"] += 7

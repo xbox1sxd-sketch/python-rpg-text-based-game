@@ -261,7 +261,7 @@ def far_underground(player):
             type_print("A child-shaped shadow runs past you.")
             return combat(player, 50, 15, "pale child", "HiddenCity")
         elif roll <= 7:
-            type_print("A watcher in armor approaches")
+            type_print("A watcher in armour approaches")
             return combat(player, 80, 14, "watcher", "HiddenCity")
         elif roll <= 8:
             type_print("A small thing crawls over.")
