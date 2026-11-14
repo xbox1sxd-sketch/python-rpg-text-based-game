@@ -129,6 +129,10 @@ def bandit_camp(player):
     
 
 def swamp(player):
+    clear()
+    if random.randint(1, 10) <= 3:
+        type_print("A large Snake slithers out of the mud!")
+        return combat(player, 30, 6, "Swamp Snake")
     while True:
         path = input_type("You trek your way through the swamp. There you see two things, which do you go to? A. A Witches hut. or B. A seperate secret enterence to the city.").upper().strip()
         if path in ("A", "B"):
