@@ -6,7 +6,7 @@ from ui import clear, input_type, type_print  # type: ignore
 
 def calc_enemy_damage(player, enemy_damage):
     base = random.randint(enemy_damage -2, enemy_damage + 2)
-    return max(1, base - player.get("armour", 0))
+    return max(1, base - player.get("armor", 0))
 
 
 def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", flee_to = None):
@@ -62,6 +62,12 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             type_print("Please choose A, B or C")
     if enemy_health <= 0:
         type_print("YOU WON!")
+        if enemy_name == "Dungeon Guardian":
+            player["guardian_dead"] = True
+            player["armor"] += 3
+            pickup(player, "Guardian Shield")
+            type_print("You defeated the Guardian! You took its shield (+3 armor)")
+            input_type("Press enter to continue")
         if enemy_name == "Warden":
             player["warden_dead"] = True
             player["damage"] += 7
@@ -175,8 +181,12 @@ def dungeon(player):
             type_print("Something drags itself to you")
             return combat(player, 45, 6, "trash thing", "Dungeon")
     elif floor == 3:
-            type_print("Something drops from above")
-            return combat(player, 55, 10, "haunter", "Dungeon")
+            if not player.get("guardian_dead"):
+                type_print("A massive armored figure blocks the door.")
+                return combat(player, 80, 12, "Dungeon Guardian", "Dungeon")
+            else:
+                type_print("Something drops from above")
+                return combat(player, 55, 10, "haunter", "Dungeon")
     else:
             type_print("two shankers step out side by side")
             return combat(player, 70, 12, "twin shankers", "Dungeon")

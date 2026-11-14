@@ -21,6 +21,7 @@ def load_game():
                 "dungeon_floor": 0,
                 "gold": 0,
                 "bandit_leader_dead": False,
+                "guardian_dead": False,
                 "inventory": [],
             }
             for key, value in defaults.items():
