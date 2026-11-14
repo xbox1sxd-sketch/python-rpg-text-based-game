@@ -98,7 +98,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             player["bandit_leader_dead"] = True
             player["damage"] += 6
             pickup(player, "Bandit's Bat")
-            type_print("You defeat the bandit Leader! You steal his big bat.")
+            type_print("You defeat the bandit Leader! You take his big bat.")
             input_type("Press ENTER to continue")
             return bandit_camp(player)
         
@@ -116,7 +116,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
         return choose_a_path(player)
     elif player["health"] <= 0:
         type_print("You lost LOL")
-        type_print("You wake up at the crossroads. Your bag feels lighter.")
+        type_print("You wake up at the crossroads. Your bag feels lighter you think you lost some gold.")
         player["health"] = player["max_health"] // 2
         player["gold"] = player["gold"] // 2
         player["dungeon_floor"] = 0
