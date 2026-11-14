@@ -24,13 +24,20 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
     while enemy_health > 0 and player["health"] > 0:
         choice = input_type("Would you like to A. Attack, B. Flee, C. Use a Potion, or I. Inventory ").strip().upper()
         if choice == "A":
-            enemy_health = max(0, enemy_health - player["damage"])
-            type_print(f"You did {player['damage']} damage!")
+            if random.randint(1, 10) == 1:
+                damage = player["damage"] * 2
+                enemy_health = max(0, enemy_health - damage)
+                type_print(f"WOW YOU DID A CRIT! you did {damage} damage!")
+            else:
+                damage = player["damage"]
+                enemy_health = max(0, enemy_health - damage)
+                type_print(f"You did {damage} damage!")
             type_print(f"It has {enemy_health} health left!")
             damage_dealt = calc_enemy_damage(player, enemy_damage)
             if enemy_health > 0:
                 player["health"] = max(0, player["health"] - damage_dealt)
-                type_print(f"The {enemy_name} did {damage_dealt} damage! You have {player['health']} health left!" )
+                type_print(f"The {enemy_name} did {damage_dealt} damage! You have {player['health']} health left!")
+                
         elif choice == "B":
             type_print("You scream and run away")
             base_damage =  calc_enemy_damage(player, enemy_damage)
