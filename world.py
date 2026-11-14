@@ -136,10 +136,16 @@ def swamp(player):
     if random.randint(1, 10) <= 3:
         type_print("A large Snake slithers out of the mud!")
         return combat(player, 30, 6, "Swamp Snake")
+    
     while True:
-        path = input_type("You trek your way through the swamp. There you see two things, which do you go to? A. A Witches hut. or B. A seperate secret enterence to the city.").upper().strip()
-        if path in ("A", "B"):
-            break
+        if player.get("witch_dead"):
+            path = input_type("You trek through the swamp. A. The empty Witches hut. B. A seperate secret enterence to the city. C. A graveyard behind the witches house").upper().strip()
+            if path in ("A", "B", "C"):
+                break
+        else:
+            path = input_type("You trek through the swamp. Do you go to A. A witches hut. or B. A secret entrance to the city. ").upper().strip()
+            if path in ("A", "B"):
+                break
         type_print("Please choose A or B")
     if path == "A":
         while True:
@@ -161,8 +167,39 @@ def swamp(player):
         type_print("You find a hidden enterence into the city")
         input_type("Press ENTER to continue")
         return inside_city(player)
+    elif path == "C":
+        clear()
+        return graveyard(player)
 
-
+def graveyard(player):
+    clear()
+    type_print("You step into the haunted graveyard. A chill runs down your spine...")
+    choice = input_type("A. Dig up the graves looking for loot. B. Explore the crypts. C. Leave").upper().strip()
+    if choice == "A":
+        roll = random.randint(1, 10)
+        if roll <= 4:
+            type_print("You dig up the wrong grave! A zombie bursts out.")
+            return combat(player, 50, 10, "Zombie", "Graveyard")
+        else:
+            gold_found = random.randint(20, 45)
+            player["gold"] += gold_found
+            type_print(f"You find a buried chest with {gold_found} gold inside!")
+            input_type("Press ENTER to continue")
+            return graveyard(player)
+    elif choice == "B":
+        roll = random.randint(1, 10)
+        if roll <= 5:
+            type_print("A skeleton rattles towards you!")
+            return combat(player, 40, 8, "Skeleton", "Graveyard")
+        else:
+            type_print("A ghost floats through the wall!")
+            return combat(player, 65, 12, "Wraith", "Graveyard")
+    elif choice == "C":
+        return choose_a_path(player)
+    else:
+        type_print("Please choose A, B, or C.")
+        input_type("Press ENTER to continue")
+        return graveyard(player)
 def inside_city(player):
     save_game(player)
     clear()

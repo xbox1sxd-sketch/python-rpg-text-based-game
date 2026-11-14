@@ -21,6 +21,7 @@ def load_game():
                 "dungeon_floor": 0,
                 "gold": 0,
                 "arena_wave": 0,
+                "witch_dead": False,
                 "bandit_leader_dead": False,
                 "guardian_dead": False,
                 "inventory": [],

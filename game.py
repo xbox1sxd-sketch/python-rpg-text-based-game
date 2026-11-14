@@ -76,6 +76,7 @@ def start_game():
     "gold": 0,
     "armour": 0,
     "arena_wave": 0,
+    "witch_dead": False,
     "bandit_leader_dead": False,
     "guardian_dead": False,
     }   

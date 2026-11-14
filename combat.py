@@ -19,6 +19,8 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
         inside_city,
         sealed_ending,
         village,
+        swamp,
+        graveyard,
     )
     type_print(f"You encounter a {enemy_name}.")
     type_print(f"It has {enemy_health} health!")
@@ -56,6 +58,10 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
                 return far_underground(player)
             elif target == "BanditCamp":
                 return bandit_camp(player)
+            elif target == "Swamp":
+                return swamp(player)
+            elif target == "Graveyard":
+                return graveyard(player)
             return choose_a_path(player)
         elif choice == "C":
             if use_potion(player) == False:
@@ -101,6 +107,12 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             type_print("You defeat the bandit Leader! You take his big bat.")
             input_type("Press ENTER to continue")
             return bandit_camp(player)
+        if enemy_name == "Witch":
+            player["witch_dead"] = True
+            pickup(player, "Witch's Charm")
+            type_print("The witch dies. The fog lifts off the swamp, revealing a massive GraveYard!")
+            input_type("Press ENTER to continue")
+            return swamp(player)
         
         if next == "city":
             return inside_city(player)
@@ -113,6 +125,10 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             return bandit_camp(player)
         elif next == "Colosseum":
             return colosseum(player)
+        elif next == "Swamp":
+            return swamp(player)
+        elif next == "Graveyard":
+            return graveyard(player)
         return choose_a_path(player)
     elif player["health"] <= 0:
         type_print("You lost LOL")
