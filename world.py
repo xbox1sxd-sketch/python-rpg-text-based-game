@@ -9,7 +9,7 @@ from ui import clear, input_type, type_print  # type: ignore
 
 def choose_a_path(player):
     save_game(player)
-    path = input_type("\nNow, where would you like to go? A. A shimmering city. B. A dark forest. C. Through the swamp. I. Inventory P. Drink a health pot ").upper().strip()
+    path = input_type("\nNow, where would you like to go? A. A shimmering city. B. A dark forest. C. Through the swamp. I. Inventory P. Drink a health pot R. Rest(10g) ").upper().strip()
     if path == "A":
         clear()
         return shimmering_city(player)
@@ -27,12 +27,27 @@ def choose_a_path(player):
         clear()
         use_potion(player)
         return choose_a_path(player)
+    elif path == "R":
+        clear()
+        return campfire(player)
     else:
         clear()
         type_print("Please choose A. B. C. I. or P")
         
         return choose_a_path(player)
 
+def campfire(player):
+    if player["gold"] >= 10:
+        if player["health"] >= player["max_health"]:
+            type_print("You are already at full health")
+        else:
+            player["gold"] -= 10
+            player["health"] = min(player["max_health"], player["health"] + 30)
+            type_print(f"You rest by the fire. You heal 30 hp. You now have {player['health']}/{player['max_health']} health.")
+    else:
+        type_print("You dont have 10 gold to pay for the fire(BROKIE)")
+    input_type("Press enter to continue")
+    return choose_a_path(player)
 
 def shimmering_city(player):
     clear()
@@ -142,6 +157,7 @@ def swamp(player):
 
 
 def inside_city(player):
+    save_game(player)
     clear()
     type_print("You now sneak past the gates into the shimmering city")
     type_print("It is beautiful, unlike any city you have ever seen.")
@@ -183,6 +199,7 @@ def wander_streets(player):
 
 
 def village(player):
+    save_game(player)
     clear()
     type_print("The tunnel opens into a street...?")
     type_print("Above you, far above, you can hear the ground shake above you.")
