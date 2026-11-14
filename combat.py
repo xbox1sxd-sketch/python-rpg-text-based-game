@@ -53,11 +53,12 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
                 return dungeon(player)
             elif target == "HiddenCity":
                 return far_underground(player)
+            elif target == "BanditCamp":
+                return bandit_camp(player)
             return choose_a_path(player)
         elif choice == "C":
             if use_potion(player) == False:
                 type_print("You fumble in your pack and waste your turn :sob:")
-                continue
             damage_dealt = calc_enemy_damage(player, enemy_damage)
             player["health"] = max(0, player["health"] - damage_dealt)
             type_print(f"The {enemy_name} did {damage_dealt} damage while you were fooling around! you have {player['health']} health left! ")
@@ -76,7 +77,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             type_print("You defeated the Guardian! You took its shield (+3 armour)")
             input_type("Press enter to continue")
             if next == "Dungeon":
-                player["dungeon_floor"] += 3
+                player["dungeon_floor"] += 1
                 return dungeon(player)
         if enemy_name == "Warden":
             player["warden_dead"] = True
