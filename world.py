@@ -312,7 +312,7 @@ def colosseum(player):
     clear()
     wave = player.get("arena_wave", 0)
     if wave == 0:
-        type_print(f"You enter the grand Colosseum. They mistake you for a participant and quickly escort you inside.")
+        type_print("You enter the grand Colosseum. They mistake you for a participant and you inside.")
     else:
         type_print(f"You are currently on Wave {wave}. You hear the crowd chanting for your death.")
     choice = input_type("A. Fight the next wave. B. Leave the Colosseum.").upper().strip()

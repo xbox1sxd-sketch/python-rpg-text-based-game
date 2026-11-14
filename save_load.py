@@ -20,6 +20,7 @@ def load_game():
                 "iron_heart_bought": False,
                 "dungeon_floor": 0,
                 "gold": 0,
+                "arena_wave": 0,
                 "bandit_leader_dead": False,
                 "guardian_dead": False,
                 "inventory": [],

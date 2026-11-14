@@ -13,12 +13,12 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
     from world import (  # type: ignore
         bandit_camp,
         choose_a_path,
+        colosseum,
         dungeon,
         far_underground,
         inside_city,
         sealed_ending,
         village,
-        colosseum,
     )
     type_print(f"You encounter a {enemy_name}.")
     type_print(f"It has {enemy_health} health!")
