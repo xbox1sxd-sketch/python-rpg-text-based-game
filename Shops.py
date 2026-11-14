@@ -73,6 +73,10 @@ def shop(player):
             type_print("You already have this armour")
             input_type("press enter to continue")
             return shop(player)
+        if player["armour"] >= 4:
+            type_print("You have better armour already numbskull")
+            input_type("Press enter to continue")
+            return shop(player)
         if player["gold"] >= 20:
             player["gold"] -= 20
             player["armour"] = max(player["armour"], 2)
@@ -110,7 +114,7 @@ def shop(player):
         sell_weapon(player)
         return shop(player)
     else:
-        type_print("Please choose A. B. C. D. or E.")
+        type_print("Please choose a valid option.")
         input_type("Press enter to continue")
         return shop(player)
 
