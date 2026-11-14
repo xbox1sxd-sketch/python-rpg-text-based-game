@@ -189,7 +189,8 @@ def sell_weapon(player):
     type_print("B. Gold Scythe (sells for 15g)")
     type_print("C. War Axe (sells for 30g)")
     type_print("D. Silver Scythe (sells for 10g)")
-    type_print("E. Leave")
+    type_print("E. Sell Bandit's Bat")
+    type_print("F. Leave")
     choice = input_type("> ").upper().strip()
     if choice == "A" and "Iron Dagger" in player["inventory"]:
         player["inventory"].remove("Iron Dagger")
@@ -211,7 +212,12 @@ def sell_weapon(player):
             player["damage"] -= 2
             player["gold"] += 10
             type_print("Sold Silver Scythe for 10 gold. Your damage decreased.")
-    elif choice == "E":
+    elif choice == "E" and "Bandit's Bat" in player["inventory"]:
+        player["inventory"].remove("Bandit's Bat")
+        player["damage"] -= 6
+        player["gold"] += 40
+        type_print("Sold Bandit's Bat for 40 gold. Your damage decreased.")
+    elif choice == "F":
         return
     else:
         type_print("Either, you dont have that weapon, or typed the wrong letter. Anyway, im dissappointed.")

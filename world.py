@@ -77,10 +77,10 @@ def dark_forest(player):
         if choice in ("A", "B", "C"):
             break
         type_print("Please choose A, B, or C")
-        if choice =="B":
-            return bandit_camp(player)
-        elif choice == "C":
-            return choose_a_path(player)
+    if choice =="B":
+        return bandit_camp(player)
+    elif choice == "C":
+        return choose_a_path(player)
             
     
     encounter = random.randint(1, 10)

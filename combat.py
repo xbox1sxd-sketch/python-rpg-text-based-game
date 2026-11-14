@@ -82,7 +82,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             pickup(player, "Bandit's Bat")
             type_print("You defeat the bandit Leader! You steal his big bat.")
             input_type("Press enter to continue")
-            return bandit_camp
+            return bandit_camp(player)
         
         if next == "city":
             return inside_city(player)
