@@ -32,7 +32,7 @@ def choose_a_path(player):
         return campfire(player)
     else:
         clear()
-        type_print("Please choose A. B. C. I. or P")
+        type_print("Please choose A. B. C. I. P. or R")
         
         return choose_a_path(player)
 
@@ -46,7 +46,7 @@ def campfire(player):
             type_print(f"You rest by the fire. You heal 30 hp. You now have {player['health']}/{player['max_health']} health.")
     else:
         type_print("You dont have 10 gold to pay for the fire(BROKIE)")
-    input_type("Press enter to continue")
+    input_type("Press ENTER to continue")
     return choose_a_path(player)
 
 def shimmering_city(player):
@@ -65,8 +65,8 @@ def shimmering_city(player):
         return combat(player, 30, 5, "guard", "city", "crossroads")
     else:
         clear()
-        type_print("Please enter A. B. or C.")
-        input_type("Press enter to continue")
+        type_print("Please ENTER A. B. or C.")
+        input_type("Press ENTER to continue")
         return shimmering_city(player)
 
 def dark_forest(player):
@@ -93,7 +93,7 @@ def dark_forest(player):
     else:
         type_print("You discover a treasure chest! How rare!")
         open_chest(player)
-        input_type("Press enter to continue")
+        input_type("Press ENTER to continue")
         return choose_a_path(player)
 
 def bandit_camp(player):
@@ -123,7 +123,7 @@ def bandit_camp(player):
         return dark_forest(player)
     else:
         type_print("Please choose A, B, or C.")
-        input_type("Press enter to continue")
+        input_type("Press ENTER to continue")
         return bandit_camp(player)
                        
     
@@ -149,14 +149,14 @@ def swamp(player):
                 return combat(player, 50, 12, "Witch")
             elif witch == "C":
                 type_print("You decided to leave (very smart)")
-                input_type("Press enter to continue")
+                input_type("Press ENTER to continue")
                 return choose_a_path(player)
             else:
                 type_print("Please type A, B, or C.")
-                input_type("Press enter to continue")
+                input_type("Press ENTER to continue")
     elif path == "B":
         type_print("You find a hidden enterence into the city")
-        input_type("Press enter to continue")
+        input_type("Press ENTER to continue")
         return inside_city(player)
 
 
@@ -179,7 +179,7 @@ def inside_city(player):
         clear()
         return choose_a_path(player)
     else:
-        type_print("Please enter A, B, C, or D")
+        type_print("Please ENTER A, B, C, or D")
         clear()
         return inside_city(player)
 
@@ -191,14 +191,14 @@ def wander_streets(player):
         gold_found = random.randint(10, 30)
         player["gold"] += gold_found
         type_print(f"You spot a wallet on the floor +{gold_found} gold")
-        input_type("Press enter to continue")
+        input_type("Press ENTER to continue")
         return inside_city(player)
     elif roll <= 7:
         type_print("An angry dude thinks you stole his wallet!")
         return combat(player, 40, 10, "angry dude", "city")
     else:
         type_print("Nothing worthwhile here")
-        input_type("Press enter to continue")
+        input_type("Press ENTER to continue")
         return inside_city(player)
 
 
@@ -223,7 +223,7 @@ def village(player):
         return inside_city(player)
     else:
         type_print("Please choose A, B, C, or D" )
-        input_type("Press enter to continue")
+        input_type("Press ENTER to continue")
         return village(player)
     
     
@@ -241,7 +241,7 @@ def local(player):
         type_print("Dont matter, he says 'You should know either way'")
     type_print("'When the old city was sealed, the warden was used as a lock to keep it out. The sealed one is what the lock was for'")
     type_print("'Now the lock is broken. It will awaken soon.'")
-    input_type("Press enter to continue")
+    input_type("Press ENTER to continue")
     return village(player)
 
 def far_underground(player):
@@ -277,14 +277,14 @@ def far_underground(player):
         return village(player)
     else:
         type_print("Please choose A, B, or C.")
-        input_type("Press enter to continue")
+        input_type("Press ENTER to continue")
         return far_underground(player)
 
 def sealed_gate(player):
     clear()
     if player["sealed_one_dead"]:
         type_print("The gate is broken open. Nothing is inside...")
-        input_type("Press enter to continue")
+        input_type("Press ENTER to continue")
         return far_underground(player)
     type_print("An enormous stone gate stands here.")
     type_print(" Many chains lay snapped on the floor. A couple remain.")
@@ -302,7 +302,7 @@ def sealed_gate(player):
         return far_underground(player)
     else:
         type_print("Please choose A, or B")
-        input_type("Press enter to continue")
+        input_type("Press ENTER to continue")
         return sealed_gate(player)
     
     

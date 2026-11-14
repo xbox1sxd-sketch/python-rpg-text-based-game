@@ -75,7 +75,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             player["armour"] += 3
             pickup(player, "Guardian Shield")
             type_print("You defeated the Guardian! You took its shield (+3 armour)")
-            input_type("Press enter to continue")
+            input_type("Press ENTER to continue")
             if next == "Dungeon":
                 player["dungeon_floor"] += 1
                 return dungeon(player)
@@ -84,21 +84,21 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             player["damage"] += 7
             pickup(player, "Warden's spear")
             type_print("The warden collapses. The gold door grinds open behind it.")
-            input_type("Press enter to continue")
+            input_type("Press ENTER to continue")
             player["dungeon_floor"] = 6
             return village(player)
         if enemy_name == "The Sealed One":
             player["sealed_one_dead"] = True
-            input_type("Press enter to continue")
+            input_type("Press ENTER to continue")
             return sealed_ending(player)
         enemy_drop(player, enemy_name)
-        input_type("Press enter to continue")
+        input_type("Press ENTER to continue")
         if enemy_name == "Bandit Leader":
             player["bandit_leader_dead"] = True
             player["damage"] += 6
             pickup(player, "Bandit's Bat")
             type_print("You defeat the bandit Leader! You steal his big bat.")
-            input_type("Press enter to continue")
+            input_type("Press ENTER to continue")
             return bandit_camp(player)
         
         if next == "city":
@@ -117,7 +117,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
         player["health"] = player["max_health"] // 2
         player["gold"] = player["gold"] // 2
         player["dungeon_floor"] = 0
-        input_type("Press enter to continue")
+        input_type("Press ENTER to continue")
         return choose_a_path(player)
     
 
@@ -135,7 +135,7 @@ def enemy_drop(player, enemy_name):
 def boss_fight(player):
     if player["warden_dead"] == True:
         type_print("The gold door stands silent. Nothing is behind it now.")
-        input_type("Press enter to continue")
+        input_type("Press ENTER to continue")
         return dungeon(player)
     clear()
     type_print("The door slides open, the ground rumbles as the thing behind it awakens...")
@@ -158,7 +158,7 @@ def dungeon(player):
             return inside_city(player)
         else:
             type_print("Please choose A, B, or C.")
-            input_type("Press enter to continue")
+            input_type("Press ENTER to continue")
             return dungeon(player)
     if floor >= 6:
         return village(player)
@@ -173,12 +173,12 @@ def dungeon(player):
         if choice == "B":
             player["dungeon_floor"] = 0
             type_print("You climb back up. Losing all your progress.")
-            input_type("Press enter to continue")
+            input_type("Press ENTER to continue")
             clear()
             return inside_city(player)
         elif choice != "A":
             type_print("Please choose A. or B.")
-            input_type("Press enter to continue")
+            input_type("Press ENTER to continue")
             return dungeon(player)
     clear()
         

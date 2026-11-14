@@ -35,7 +35,7 @@ def play_beginning():
         damage = 5
     else:
         clear()
-        type_print("Please enter a proper difficulty.")
+        type_print("Please ENTER a proper difficulty.")
         return play_beginning()
     input_type("\nPress ENTER to continue")
     clear()
@@ -56,7 +56,7 @@ def start_game():
                 delete_save()
                 clear()
                 type_print("Creating a new game...")
-                input_type("Press enter to continue")
+                input_type("Press ENTER to continue")
                 clear()
                 break
             type_print("Please choose A or B")
