@@ -1,7 +1,7 @@
 import random
 
 from combat import combat, dungeon  # type: ignore
-from items import open_chest, show_inventory, use_potion  # type: ignore
+from items import open_chest, pickup, show_inventory, use_potion  # type: ignore
 from save_load import delete_save, save_game  # type: ignore
 from shops import merchant, shop  # type: ignore
 from ui import clear, input_type, type_print  # type: ignore
@@ -184,6 +184,15 @@ def graveyard(player):
         if roll <= 4:
             type_print("You dig up the wrong grave! A zombie bursts out.")
             return combat(player, 50, 10, "Zombie", "Graveyard")
+        elif roll == 5 and "Cursed Blade" not in player["inventory"]:
+            type_print("You dig up a rusted coffin. And find a pitch black sword. It swallows some health for more damage.")
+            player["damage"] += 12
+            player["max_health"] -= 30
+            player["health"] = min(player["health"], player["max_health"])
+            pickup(player, "Cursed Blade")
+            type_print("You equip the cursed blade(+12 damage, -30max health)")
+            input_type("Press ENTER to continue")
+            return graveyard(player)
         else:
             gold_found = random.randint(20, 45)
             player["gold"] += gold_found
@@ -204,6 +213,7 @@ def graveyard(player):
         type_print("Please choose A, B, or C.")
         input_type("Press ENTER to continue")
         return graveyard(player)
+    
 def inside_city(player):
     save_game(player)
     clear()
@@ -360,6 +370,9 @@ def colosseum(player):
     if choice == "A":
         player["arena_wave"] += 1
         next_wave = player["arena_wave"]
+        if next_wave == 10:
+            type_print("The crowd goes silent... the previous champion steps out!")
+            return combat(player, 200, 25, "Arena Champion", "Colosseum")
         enemy_hp = 30 + (next_wave * 15)
         enemy_dmg = 5 + (next_wave * 2)
         type_print(f"A gladiator steps into the arena. (HP: {enemy_hp}, Damage: {enemy_dmg})")
