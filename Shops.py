@@ -7,7 +7,7 @@ def shop(player):
     clear()
     type_print("An exhausted looking blacksmith looks up from this anvil? 'What'll it be' he says")
     type_print(f"You have {player['gold']} gold (earn more from fighting).")
-    choice = input_type("A. A health potion (10g). B. A Gold Scythe (+3 dmg, 30g) Or C. Iron Dagger (+1 dmg, 15g) D. War Axe (+5 dmg, 60g) G. Leather Armour(+2 armour, 20g) H. Iron armour(+4 armour, 50g) F. Sell Weapons I. inventory or E: Leave ").upper().strip()
+    choice = input_type("A. A health potion (10g). B. A Gold Scythe (+3 dmg, 30g) Or C. Iron Dagger (+1 dmg, 15g) D. War Axe (+5 dmg, 60g) G. Leather Armour(+2 armour, 20g) H. Iron armour(+4 armour, 50g) J. Katana(8dmg 150g) K. Super Shield(+6 armor, 200g) F. Sell Weapons I. inventory or E: Leave ").upper().strip()
     if choice == "A":
         if player["gold"] >= 10:
             player["gold"] -= 10
@@ -93,7 +93,7 @@ def shop(player):
             type_print("You already have this idiot")
             input_type("press ENTER to continue")
             return shop(player)
-        if player["gold"] >= 50:
+        if player["gold"] >= 50: 
             player["gold"] -= 50
             player["armour"] = max(player["armour"], 4)
             player["inventory"].append("Iron Armour")
@@ -101,8 +101,40 @@ def shop(player):
             input_type("press ENTER to continue")
             return shop(player)
         else:
+            type_print("You dont have enough gold")
+            input_type("Press ENTER to continue")
+            return shop(player)
+    elif choice == "J":
+        if "Katana" in player["inventory"]: 
+            type_print("You already have the katana")
+            input_type("Press ENTER to continue")
+            return shop(player)
+        if player["gold"] >= 150:
+            player["gold"] -= 150
+            player["damage"] += 8
+            pickup(player, "Katana")
+            type_print(f"Your damage is now {player['damage']}")
+            input_type("Press ENTER to continue")
+            return shop(player)
+        else:
             type_print("You dont have enough gold [go fight buddy]")
             input_type("press ENTER to continue")
+            return shop(player)
+    elif choice == "K":
+        if "Super Shield" in player["inventory"]:
+            type_print("You already have the super shield!")
+            input_type("Press ENTER to continue")
+            return shop(player)
+        if player["gold"] >= 200:
+            player["gold"] -= 200
+            player["armour"] += 6
+            pickup(player, "Super Shield")
+            type_print(f"Your armour is now {player['armour']}")
+            input_type("press ENTER to continue")
+            return shop(player)
+        else:
+            type_print("You don't have enough gold. 'get outta my shop bum'")
+            input_type("Press ENTER to continue")
             return shop(player)
     elif choice == "E":
         return inside_city(player)
@@ -193,8 +225,10 @@ def sell_weapon(player):
     type_print("B. Gold Scythe (sells for 15g)")
     type_print("C. War Axe (sells for 30g)")
     type_print("D. Silver Scythe (sells for 10g)")
-    type_print("E. Sell Bandit's Bat")
-    type_print("F. Leave")
+    type_print("E. Sell Bandit's Bat (sells for 40g)")
+    type_print("F. Sell Katana (sells for 75g)")
+    type_print("G. Super Shield (sells for 100g)")
+    type_print("L. Leave")
     choice = input_type("> ").upper().strip()
     if choice == "A" and "Iron Dagger" in player["inventory"]:
         player["inventory"].remove("Iron Dagger")
@@ -221,7 +255,17 @@ def sell_weapon(player):
         player["damage"] -= 6
         player["gold"] += 40
         type_print("Sold Bandit's Bat for 40 gold. Your damage decreased.")
-    elif choice == "F":
+    elif choice == "F" and "Katana" in player["inventory"]:
+        player["inventory"].remove("Katana")
+        player["damage"] -= 8
+        player["gold"] += 75
+        type_print("Sold Katana for 75 gold. Your damage decreased.")
+    elif choice == "G" and "Super Shield" in player["inventory"]:
+        player["inventory"].remove("Super Shield")
+        player["armour"] -= 6
+        player["gold"] += 100
+        type_print("Sold Super Shield for 100 gold. Your armour decreased.")
+    elif choice == "L":
         return
     else:
         type_print("Either, you dont have that weapon, or typed the wrong letter. Anyway, im dissappointed.")
