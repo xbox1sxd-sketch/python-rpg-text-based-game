@@ -219,7 +219,7 @@ def inside_city(player):
     clear()
     type_print("You now sneak past the gates into the shimmering city")
     type_print("It is beautiful, unlike any city you have ever seen.")
-    choice = input_type("What do you do? A. Look for the blacksmith. B. Wander around. C. Look at the giant grate or D. Leave").upper().strip()
+    choice = input_type("What do you do? A. Look for the blacksmith. B. Wander around. C. Look at the giant grate. D. Enter the Tavern or E. Leave").upper().strip()
     if choice == "A":
         clear()
         return shop(player)
@@ -231,12 +231,42 @@ def inside_city(player):
         return dungeon(player)
     elif choice == "D":
         clear()
+        return tavern(player)
+    elif choice == "E":
+        clear()
         return choose_a_path(player)
     else:
         type_print("Please ENTER A, B, C, or D")
         clear()
         return inside_city(player)
 
+def tavern(player):
+    clear()
+    type_print("You walk towards the tavern. You already smell the booze and meat.")
+    choice = input_type("A. Buy a meal and drink(15g, heals 50hp). B. Arm wrestle for gold. Or C. Leave")
+    if choice == "A":
+        if player["gold"] >= 15:
+            player["gold"] -= 15
+            player["health"] = min(player["max_health"], player["health"] + 50)
+            type_print(f"You fill your stomach up. Your health is now {player['health']}/{player['max_health']}")
+        else:
+            type_print("The bartender shakes his head. 'Sorry, I dont serve them poor ones'")
+    elif choice == "B":
+        if player["gold"] >= 20:
+            player["gold"] -= 20
+            type_print("A massive wrestler slams his arm onto the table.. you put 20 gold down.")
+            if random.randint(1, 20) <= (player["damage"] / 2):
+                player["gold"] += 50
+                type_print("You destroy him!. The crows boos. You win 50g")
+            else:
+                type_print("Your arm gives out. The wrestler takes your gold.")
+        else:
+            type_print("You need 20 gold to make a bet.")
+    elif choice == "C":
+        return inside_city(player)
+    else:
+        type_print("please choose A. B. or C")
+        return tavern(player)
 
 def wander_streets(player):
     clear()
