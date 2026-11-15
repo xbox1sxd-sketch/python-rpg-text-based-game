@@ -40,6 +40,12 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             if enemy_health > 0:
                 player["health"] = max(0, player["health"] - damage_dealt)
                 type_print(f"The {enemy_name} did {damage_dealt} damage! You have {player['health']} health left!")
+                if enemy_name == "Thief" and player["gold"] > 0:
+                    stolen = 15
+                    if player["gold"] < 15:
+                        stolen = player["gold"]
+                    player["gold"] -= stolen
+                    type_print(f"The thief grabs {stolen} gold from your bag!")
                 
         elif choice == "B":
             type_print("You scream and run away")

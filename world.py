@@ -93,6 +93,9 @@ def dark_forest(player):
     elif 7 <= encounter <= 9:
         type_print("A goblin approaches you!")
         return combat(player, 50, 8, "goblin")
+    elif encounter == 8:
+        type_print("A masked man jumps out of a bush!")
+        return combat(player, 30, 4, "Thief")    
     else:
         type_print("You discover a treasure chest! How rare!")
         open_chest(player)
@@ -133,9 +136,13 @@ def bandit_camp(player):
 
 def swamp(player):
     clear()
-    if random.randint(1, 10) <= 3:
+    encounter = random.randint(1, 10)
+    if encounter <=3:
         type_print("A large Snake slithers out of the mud!")
         return combat(player, 30, 6, "Swamp Snake", "Swamp")
+    elif encounter == 4:
+        type_print("A masked man is hiding in the mud and jumps out!")
+        return combat(player, 30, 4, "Thief", "Swamp")
     
     while True:
         if player.get("witch_dead"):
@@ -193,6 +200,9 @@ def graveyard(player):
             type_print("You equip the cursed blade(+12 damage, -30max health)")
             input_type("Press ENTER to continue")
             return graveyard(player)
+        elif roll == 6:
+            type_print("A thief is looting the tombs! He attacks you!")
+            return combat(player, 30, 4, "Thief", "Graveyard")
         else:
             gold_found = random.randint(20, 45)
             player["gold"] += gold_found
@@ -280,6 +290,9 @@ def wander_streets(player):
     elif roll <= 7:
         type_print("An angry dude thinks you stole his wallet!")
         return combat(player, 40, 10, "angry dude", "city")
+    elif roll == 8:
+        type_print("A thief tries to pickpocket you!")
+        return combat(player, 30, 4, "Thief", "city")
     else:
         type_print("Nothing worthwhile here")
         input_type("Press ENTER to continue")
@@ -344,10 +357,13 @@ def far_underground(player):
         elif roll <= 6:
             type_print("A child-shaped shadow runs past you.")
             return combat(player, 50, 15, "pale child", "HiddenCity")
-        elif roll <= 7:
+        elif roll == 7:
+            type_print("A thief jumps out!")
+            return combat(player, 30, 4, "Thief", "Hiddencity")
+        elif roll == 8:
             type_print("A watcher in armour approaches")
             return combat(player, 80, 14, "watcher", "HiddenCity")
-        elif roll <= 8:
+        elif roll == 9:
             type_print("A small thing crawls over.")
             return combat(player, 70, 12, "better crawler", "HiddenCity")
         else:
