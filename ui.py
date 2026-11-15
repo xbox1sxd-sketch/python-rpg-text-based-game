@@ -54,3 +54,6 @@ def input_type(text, delay=0.03):
         # Use normal terminal input if playing locally
         return input()
 
+def pause():
+    input_type("Press ENTER to continue")
+

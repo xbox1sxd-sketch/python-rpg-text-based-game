@@ -1,7 +1,7 @@
 import random
 
 from items import pickup  # type: ignore
-from ui import clear, input_type, type_print  # type: ignore
+from ui import clear, input_type, pause, type_print  # type: ignore
 
 
 def shop(player):
@@ -17,17 +17,17 @@ def shop(player):
         if player["gold"] >= 10:
             player["gold"] -= 10
             pickup(player, "Health Potion")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
         else:
             type_print("You don't have enough gold.")
-            input_type("Press ENTER to continue")
+            pause()
             clear()
             return shop(player)
     elif choice == "B":
         if "Gold Scythe" in player["inventory"]:
             type_print("You cant buy another")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
         price = 20 if sale else 30
         if player["gold"] >= price:
@@ -35,16 +35,16 @@ def shop(player):
             player["damage"] += 3
             type_print(f"Congrats! Your damage is now {player['damage']}")
             pickup(player, "Gold Scythe")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
         else:
             type_print("You don't have enough gold :(")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
     elif choice == "C":
         if "Iron Dagger" in player["inventory"]:
             type_print("You already have one")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
         price = 5 if sale else 15
         if player ["gold"] >= price:
@@ -52,17 +52,17 @@ def shop(player):
             player["damage"] += 1
             type_print(f"Your damage is now {player['damage']}")
             pickup(player, "Iron Dagger")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
         else:
             type_print("You don't have enough gold :(")
-            input_type("Press ENTER to continue")
+            pause()
             clear()
             return shop(player)
     elif choice == "D":
         if "War Axe" in player["inventory"]:
             type_print("You cant buy another")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
         price = 50 if sale else 60
         if player["gold"] >= price:
@@ -70,20 +70,20 @@ def shop(player):
             player["damage"] += 5
             type_print(f"Your damage is now {player['damage']}")
             pickup(player, "War Axe")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
         else:
             type_print("You don't have enough gold :(")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
     elif choice == "G":
         if "Leather Armour" in player["inventory"]:
             type_print("You already have this armour")
-            input_type("press ENTER to continue")
+            pause()
             return shop(player)
         if player["armour"] >= 4:
             type_print("You have better armour already numbskull")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
         price = 10 if sale else 20
         if player["gold"] >= price:
@@ -91,16 +91,16 @@ def shop(player):
             player["armour"] = max(player["armour"], 2)
             player["inventory"].append("Leather Armour")
             type_print(f"Your armour is now {player['armour']}")
-            input_type("press ENTER to continue")
+            pause()
             return shop(player)
         else:
             type_print("You don't have enough gold [LOL]")
-            input_type("press ENTER to continue")
+            pause()
             return shop(player)
     elif choice == "H":
         if "Iron Armour" in player["inventory"]:
             type_print("You already have this idiot")
-            input_type("press ENTER to continue")
+            pause()
             return shop(player)
         price = 40 if sale else 50
         if player["gold"] >= price: 
@@ -108,16 +108,16 @@ def shop(player):
             player["armour"] = max(player["armour"], 4)
             player["inventory"].append("Iron Armour")
             type_print(f"Your armour is now {player['armour']}")
-            input_type("press ENTER to continue")
+            pause()
             return shop(player)
         else:
             type_print("You dont have enough gold")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
     elif choice == "J":
         if "Katana" in player["inventory"]: 
             type_print("You already have the katana")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
         price = 140 if sale else 150
         if player["gold"] >= price:
@@ -125,16 +125,16 @@ def shop(player):
             player["damage"] += 8
             pickup(player, "Katana")
             type_print(f"Your damage is now {player['damage']}")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
         else:
             type_print("You dont have enough gold [go fight buddy]")
-            input_type("press ENTER to continue")
+            pause()
             return shop(player)
     elif choice == "K":
         if "Super Shield" in player["inventory"]:
             type_print("You already have the super shield!")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
         price = 190 if sale else 200
         if player["gold"] >= price:
@@ -142,11 +142,11 @@ def shop(player):
             player["armour"] += 6
             pickup(player, "Super Shield")
             type_print(f"Your armour is now {player['armour']}")
-            input_type("press ENTER to continue")
+            pause()
             return shop(player)
         else:
             type_print("You don't have enough gold. 'get outta my shop bum'")
-            input_type("Press ENTER to continue")
+            pause()
             return shop(player)
     elif choice == "E":
         return inside_city(player)
@@ -159,7 +159,7 @@ def shop(player):
         return shop(player)
     else:
         type_print("Please choose a valid option.")
-        input_type("Press ENTER to continue")
+        pause()
         return shop(player)
 
 
@@ -174,32 +174,32 @@ def merchant(player):
         if player["gold"] >= 8:
             player["gold"] -= 8
             pickup(player, "Health Potion")
-            input_type("Press ENTER to continue")
+            pause()
             return merchant(player)
         else:
             type_print("You don't have enough gold")
-            input_type("Press ENTER to continue")
+            pause()
             return merchant(player)
     elif choice == "B":
         if player ["whetstone_bought"]:
             type_print("'I've already used the whetstone for you' says the merchant.")
-            input_type("Press ENTER to continue")
+            pause()
             return merchant(player)
         if player["gold"] >= 40:
             player["whetstone_bought"] = True
             player["gold"] -= 40
             player["damage"] += 2
-            type_print(f"She sharpens your weapon. Your damage is now {player['damage']}")
-            input_type("Press ENTER to continue")
+            type_print(f"She sharpens your weapon. Yo damage is now {player['damage']}")
+            pause()
             return merchant(player)
         else:
             type_print("You don't have enough gold")
-            input_type("Press ENTER to continue")
+            pause()
             return merchant(player)
     elif choice == "C":
         if player["iron_heart_bought"]:
             type_print("'You've already bought one' she says")
-            input_type("Press ENTER to continue")
+            pause()
             return merchant(player)
         if player["gold"] >= 50:
             player["iron_heart_bought"] = True
@@ -207,11 +207,11 @@ def merchant(player):
             player["max_health"] += 25
             player["health"] += 25
             type_print(f"She hands you some mercury in a bottle and tells you to drink up. Your max health is now {player['max_health']}")
-            input_type("Press ENTER to continue")
+            pause()
             return merchant(player)
         else:
             type_print("You don't have enough gold")
-            input_type("Press ENTER to continue")
+            pause()
             return merchant(player)
     elif choice == "I":
         from items import show_inventory
@@ -225,7 +225,7 @@ def merchant(player):
         return village(player)
     else:
         type_print("Please choose A. B. C. or D.")
-        input_type("Press ENTER to continue")
+        pause()
         return merchant(player)
 
 
@@ -281,4 +281,4 @@ def sell_weapon(player):
         return
     else:
         type_print("Either, you dont have that weapon, or typed the wrong letter. Anyway, im dissappointed.")
-    input_type("Press ENTER to continue")
+    pause()

@@ -1,5 +1,5 @@
 from save_load import delete_save, load_game, save_game  # type: ignore
-from ui import clear, input_type, type_print  # type: ignore
+from ui import clear, input_type, pause, type_print  # type: ignore
 from world import choose_a_path  # type: ignore
 
 type_print("\n\nWelcome to my text based Adventure Game!")
@@ -56,7 +56,7 @@ def start_game():
                 delete_save()
                 clear()
                 type_print("Creating a new game...")
-                input_type("Press ENTER to continue")
+                pause()
                 clear()
                 break
             type_print("Please choose A or B")
