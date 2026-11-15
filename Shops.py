@@ -4,6 +4,14 @@ from items import pickup  # type: ignore
 from ui import clear, input_type, pause, type_print  # type: ignore
 
 
+def can_afford(player, price):
+    if player["gold"] >= price:
+        player["gold"] -= price
+        return True
+    else:
+        type_print("You don't have enough gold")
+        pause()
+        return False
 def shop(player):
     from world import inside_city  # type: ignore
     clear()
@@ -14,68 +22,47 @@ def shop(player):
     type_print(f"You have {player['gold']} gold (earn more from fighting).")
     choice = input_type("A. A health potion (10g). B. A Gold Scythe (+3 dmg, 30g) Or C. Iron Dagger (+1 dmg, 15g) D. War Axe (+5 dmg, 60g) G. Leather Armour(+2 armour, 20g) H. Iron armour(+4 armour, 50g) J. Katana(8dmg 150g) K. Super Shield(+6 armor, 200g) F. Sell Weapons I. inventory or E: Leave ").upper().strip()
     if choice == "A":
-        if player["gold"] >= 10:
-            player["gold"] -= 10
+        price = 10
+        if can_afford(player, price):
             pickup(player, "Health Potion")
             pause()
-            return shop(player)
-        else:
-            type_print("You don't have enough gold.")
-            pause()
-            clear()
-            return shop(player)
+        return shop(player)
     elif choice == "B":
         if "Gold Scythe" in player["inventory"]:
             type_print("You cant buy another")
             pause()
             return shop(player)
         price = 20 if sale else 30
-        if player["gold"] >= price:
-            player["gold"] -= price
+        if can_afford(player, price):
             player["damage"] += 3
             type_print(f"Congrats! Your damage is now {player['damage']}")
             pickup(player, "Gold Scythe")
             pause()
-            return shop(player)
-        else:
-            type_print("You don't have enough gold :(")
-            pause()
-            return shop(player)
+        return shop(player)
     elif choice == "C":
         if "Iron Dagger" in player["inventory"]:
             type_print("You already have one")
             pause()
             return shop(player)
         price = 5 if sale else 15
-        if player ["gold"] >= price:
-            player["gold"] -= price
+        if can_afford(player, price):
             player["damage"] += 1
             type_print(f"Your damage is now {player['damage']}")
             pickup(player, "Iron Dagger")
             pause()
-            return shop(player)
-        else:
-            type_print("You don't have enough gold :(")
-            pause()
-            clear()
-            return shop(player)
+        return shop(player)
     elif choice == "D":
         if "War Axe" in player["inventory"]:
             type_print("You cant buy another")
             pause()
             return shop(player)
         price = 50 if sale else 60
-        if player["gold"] >= price:
-            player["gold"] -= price
+        if can_afford(player, price):
             player["damage"] += 5
             type_print(f"Your damage is now {player['damage']}")
             pickup(player, "War Axe")
             pause()
-            return shop(player)
-        else:
-            type_print("You don't have enough gold :(")
-            pause()
-            return shop(player)
+        return shop(player)
     elif choice == "G":
         if "Leather Armour" in player["inventory"]:
             type_print("You already have this armour")
@@ -86,68 +73,49 @@ def shop(player):
             pause()
             return shop(player)
         price = 10 if sale else 20
-        if player["gold"] >= price:
-            player["gold"] -= price
+        if can_afford(player, price):
             player["armour"] = max(player["armour"], 2)
             player["inventory"].append("Leather Armour")
             type_print(f"Your armour is now {player['armour']}")
             pause()
-            return shop(player)
-        else:
-            type_print("You don't have enough gold [LOL]")
-            pause()
-            return shop(player)
+        return shop(player)
     elif choice == "H":
         if "Iron Armour" in player["inventory"]:
             type_print("You already have this idiot")
             pause()
             return shop(player)
         price = 40 if sale else 50
-        if player["gold"] >= price: 
-            player["gold"] -= price
+        if can_afford(player, price): 
+            
             player["armour"] = max(player["armour"], 4)
             player["inventory"].append("Iron Armour")
             type_print(f"Your armour is now {player['armour']}")
             pause()
-            return shop(player)
-        else:
-            type_print("You dont have enough gold")
-            pause()
-            return shop(player)
+        return shop(player)
     elif choice == "J":
         if "Katana" in player["inventory"]: 
             type_print("You already have the katana")
             pause()
             return shop(player)
         price = 140 if sale else 150
-        if player["gold"] >= price:
-            player["gold"] -= price
+        if can_afford(player, price): 
             player["damage"] += 8
             pickup(player, "Katana")
             type_print(f"Your damage is now {player['damage']}")
             pause()
-            return shop(player)
-        else:
-            type_print("You dont have enough gold [go fight buddy]")
-            pause()
-            return shop(player)
+        return shop(player)
     elif choice == "K":
         if "Super Shield" in player["inventory"]:
             type_print("You already have the super shield!")
             pause()
             return shop(player)
         price = 190 if sale else 200
-        if player["gold"] >= price:
-            player["gold"] -= price
+        if can_afford(player, price):
             player["armour"] += 6
             pickup(player, "Super Shield")
             type_print(f"Your armour is now {player['armour']}")
             pause()
-            return shop(player)
-        else:
-            type_print("You don't have enough gold. 'get outta my shop bum'")
-            pause()
-            return shop(player)
+        return shop(player)
     elif choice == "E":
         return inside_city(player)
     elif choice == "I":
@@ -189,7 +157,7 @@ def merchant(player):
             player["whetstone_bought"] = True
             player["gold"] -= 40
             player["damage"] += 2
-            type_print(f"She sharpens your weapon. Yo damage is now {player['damage']}")
+            type_print(f"She sharpens your weapon. Your damage is now {player['damage']}")
             pause()
             return merchant(player)
         else:
