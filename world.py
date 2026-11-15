@@ -135,7 +135,7 @@ def swamp(player):
     clear()
     if random.randint(1, 10) <= 3:
         type_print("A large Snake slithers out of the mud!")
-        return combat(player, 30, 6, "Swamp Snake")
+        return combat(player, 30, 6, "Swamp Snake", "Swamp")
     
     while True:
         if player.get("witch_dead"):

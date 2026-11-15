@@ -16,11 +16,11 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
         colosseum,
         dungeon,
         far_underground,
+        graveyard,
         inside_city,
         sealed_ending,
-        village,
         swamp,
-        graveyard,
+        village,
     )
     type_print(f"You encounter a {enemy_name}.")
     type_print(f"It has {enemy_health} health!")
