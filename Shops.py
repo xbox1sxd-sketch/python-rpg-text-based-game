@@ -1,3 +1,5 @@
+import random
+
 from items import pickup  # type: ignore
 from ui import clear, input_type, type_print  # type: ignore
 
@@ -5,6 +7,9 @@ from ui import clear, input_type, type_print  # type: ignore
 def shop(player):
     from world import inside_city  # type: ignore
     clear()
+    sale = random.randint(1, 10) <= 2
+    if sale:
+        type_print("TAX DAY! The blacksmith is low on money and desperate for gold! Everything is 10g cheaper!")
     type_print("An exhausted looking blacksmith looks up from this anvil? 'What'll it be' he says")
     type_print(f"You have {player['gold']} gold (earn more from fighting).")
     choice = input_type("A. A health potion (10g). B. A Gold Scythe (+3 dmg, 30g) Or C. Iron Dagger (+1 dmg, 15g) D. War Axe (+5 dmg, 60g) G. Leather Armour(+2 armour, 20g) H. Iron armour(+4 armour, 50g) J. Katana(8dmg 150g) K. Super Shield(+6 armor, 200g) F. Sell Weapons I. inventory or E: Leave ").upper().strip()
@@ -24,8 +29,9 @@ def shop(player):
             type_print("You cant buy another")
             input_type("Press ENTER to continue")
             return shop(player)
-        if player["gold"] >= 30:
-            player["gold"] -= 30
+        price = 20 if sale else 30
+        if player["gold"] >= price:
+            player["gold"] -= price
             player["damage"] += 3
             type_print(f"Congrats! Your damage is now {player['damage']}")
             pickup(player, "Gold Scythe")
@@ -40,8 +46,9 @@ def shop(player):
             type_print("You already have one")
             input_type("Press ENTER to continue")
             return shop(player)
-        if player ["gold"] >= 15:
-            player["gold"] -= 15
+        price = 5 if sale else 15
+        if player ["gold"] >= price:
+            player["gold"] -= price
             player["damage"] += 1
             type_print(f"Your damage is now {player['damage']}")
             pickup(player, "Iron Dagger")
@@ -57,8 +64,9 @@ def shop(player):
             type_print("You cant buy another")
             input_type("Press ENTER to continue")
             return shop(player)
-        if player["gold"] >= 60:
-            player["gold"] -= 60
+        price = 50 if sale else 60
+        if player["gold"] >= price:
+            player["gold"] -= price
             player["damage"] += 5
             type_print(f"Your damage is now {player['damage']}")
             pickup(player, "War Axe")
@@ -77,8 +85,9 @@ def shop(player):
             type_print("You have better armour already numbskull")
             input_type("Press ENTER to continue")
             return shop(player)
-        if player["gold"] >= 20:
-            player["gold"] -= 20
+        price = 10 if sale else 20
+        if player["gold"] >= price:
+            player["gold"] -= price
             player["armour"] = max(player["armour"], 2)
             player["inventory"].append("Leather Armour")
             type_print(f"Your armour is now {player['armour']}")
@@ -93,8 +102,9 @@ def shop(player):
             type_print("You already have this idiot")
             input_type("press ENTER to continue")
             return shop(player)
-        if player["gold"] >= 50: 
-            player["gold"] -= 50
+        price = 40 if sale else 50
+        if player["gold"] >= price: 
+            player["gold"] -= price
             player["armour"] = max(player["armour"], 4)
             player["inventory"].append("Iron Armour")
             type_print(f"Your armour is now {player['armour']}")
@@ -109,8 +119,9 @@ def shop(player):
             type_print("You already have the katana")
             input_type("Press ENTER to continue")
             return shop(player)
-        if player["gold"] >= 150:
-            player["gold"] -= 150
+        price = 140 if sale else 150
+        if player["gold"] >= price:
+            player["gold"] -= price
             player["damage"] += 8
             pickup(player, "Katana")
             type_print(f"Your damage is now {player['damage']}")
@@ -125,8 +136,9 @@ def shop(player):
             type_print("You already have the super shield!")
             input_type("Press ENTER to continue")
             return shop(player)
-        if player["gold"] >= 200:
-            player["gold"] -= 200
+        price = 190 if sale else 200
+        if player["gold"] >= price:
+            player["gold"] -= price
             player["armour"] += 6
             pickup(player, "Super Shield")
             type_print(f"Your armour is now {player['armour']}")

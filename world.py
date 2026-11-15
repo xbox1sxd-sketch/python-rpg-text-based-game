@@ -49,6 +49,8 @@ def campfire(player):
             type_print(f"You rest by the fire. You heal 30 hp. You now have {player['health']}/{player['max_health']} health.")
     else:
         type_print("You dont have 10 gold to pay for the fire(BROKIE)")
+        type_print("A thief jumps out and attacks you! (shouldnt have came to heal while broke jajaja)")
+        return combat(player, 30, 4, "Thief", "Campfire")
     input_type("Press ENTER to continue")
     return choose_a_path(player)
 
@@ -87,13 +89,13 @@ def dark_forest(player):
             
     
     encounter = random.randint(1, 10)
-    if 1 <= encounter <= 6:
+    if 1 <= encounter <= 5:
         type_print("A wolf approaches you!")
         return combat(player, 25, 5, "wolf")
-    elif 7 <= encounter <= 9:
+    elif 6 <= encounter <= 8:
         type_print("A goblin approaches you!")
         return combat(player, 50, 8, "goblin")
-    elif encounter == 8:
+    elif encounter == 9:
         type_print("A masked man jumps out of a bush!")
         return combat(player, 30, 4, "Thief")    
     else:
@@ -359,7 +361,7 @@ def far_underground(player):
             return combat(player, 50, 15, "pale child", "HiddenCity")
         elif roll == 7:
             type_print("A thief jumps out!")
-            return combat(player, 30, 4, "Thief", "Hiddencity")
+            return combat(player, 30, 4, "Thief", "HiddenCity")
         elif roll == 8:
             type_print("A watcher in armour approaches")
             return combat(player, 80, 14, "watcher", "HiddenCity")
