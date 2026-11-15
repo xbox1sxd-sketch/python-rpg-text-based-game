@@ -148,6 +148,10 @@ def swamp(player):
                 break
         type_print("Please choose A or B")
     if path == "A":
+        if player.get("witch_dead"):
+            type_print("The witches hut is empty. Shes dead remember?")
+            input_type("Press ENTER to continue")
+            return swamp(player)
         while True:
             witch = input_type("You make your way into the witches hut. Inside you see the witch sleeping. Do you A. Kill her. or B. Wake her up? or C. Leave ").upper().strip()
             if witch == "A":
