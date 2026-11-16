@@ -5,7 +5,7 @@ from world import choose_a_path  # type: ignore
 type_print("\n\nWelcome to my text based Adventure Game!")
 type_print("\nI hope you enjoy!\n\n")
     
-
+#You choose your name
 def get_name():
     while True:
         player_name = input_type("What would you like to be called Adventurer? ").strip()
@@ -13,20 +13,21 @@ def get_name():
             break
         type_print("Name must be atleast 4 characters :)")
         clear()
-        return get_name()
     print("\n")
     type_print("Ah " + player_name + ", What an excellent name.")
     return player_name
 
-
+#You choose easy medium or hard
 def play_beginning():
     print("\n")
     type_print("Choose your difficulty.")
     while True:
         difficulty = input_type("Enter one. Easy, Medium, Or Hard? ").lower().strip()
+        
         if difficulty == "medium":
             type_print("Indeed the path you chosen is a simple one.")
             health, damage = 150, 7
+            break
         elif difficulty == "easy":
             type_print("\nIndeed the path you have chosen is a forgiving one.")
             health, damage = 200, 10
@@ -41,7 +42,7 @@ def play_beginning():
     clear()
     return health, damage
 
-
+#The starting dictionary that holds everything, also finds if you have a save file or not
 def start_game():
     saved_player = load_game()
     if saved_player is not None:
