@@ -9,7 +9,7 @@ type_print("\nI hope you enjoy!\n\n")
 def get_name():
     while True:
         player_name = input_type("What would you like to be called Adventurer? ").strip()
-        if len(player_name) < 4:
+        if len(player_name) >= 4:
             break
         type_print("Name must be atleast 4 characters :)")
         clear()
