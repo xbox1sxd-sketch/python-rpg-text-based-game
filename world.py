@@ -278,7 +278,8 @@ def tavern(player):
         return inside_city(player)
     else:
         type_print("please choose A. B. or C")
-        return tavern(player)
+    pause()
+    return tavern(player)
 
 def wander_streets(player):
     clear()

@@ -71,6 +71,8 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
                 return swamp(player)
             elif target == "Graveyard":
                 return graveyard(player)
+            elif target == "Campfire":
+                return choose_a_path(player)
             return choose_a_path(player)
         elif choice == "C":
             if use_potion(player) == False:

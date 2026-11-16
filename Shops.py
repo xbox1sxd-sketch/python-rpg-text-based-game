@@ -1,6 +1,7 @@
 import random
 
 from items import pickup  # type: ignore
+from save_load import save_game
 from ui import clear, input_type, pause, type_print  # type: ignore
 
 
@@ -12,6 +13,7 @@ def can_afford(player, price):
         type_print("You don't have enough gold")
         pause()
         return False
+    
 def shop(player):
     from world import inside_city  # type: ignore
     clear()
@@ -24,6 +26,7 @@ def shop(player):
     if choice == "A":
         price = 10
         if can_afford(player, price):
+            save_game(player)
             pickup(player, "Health Potion")
             pause()
         return shop(player)
@@ -34,6 +37,7 @@ def shop(player):
             return shop(player)
         price = 20 if sale else 30
         if can_afford(player, price):
+            save_game(player)
             player["damage"] += 3
             type_print(f"Congrats! Your damage is now {player['damage']}")
             pickup(player, "Gold Scythe")
@@ -46,6 +50,7 @@ def shop(player):
             return shop(player)
         price = 5 if sale else 15
         if can_afford(player, price):
+            save_game(player)
             player["damage"] += 1
             type_print(f"Your damage is now {player['damage']}")
             pickup(player, "Iron Dagger")
@@ -58,6 +63,7 @@ def shop(player):
             return shop(player)
         price = 50 if sale else 60
         if can_afford(player, price):
+            save_game(player)
             player["damage"] += 5
             type_print(f"Your damage is now {player['damage']}")
             pickup(player, "War Axe")
@@ -74,6 +80,7 @@ def shop(player):
             return shop(player)
         price = 10 if sale else 20
         if can_afford(player, price):
+            save_game(player)
             player["armour"] = max(player["armour"], 2)
             player["inventory"].append("Leather Armour")
             type_print(f"Your armour is now {player['armour']}")
@@ -84,9 +91,13 @@ def shop(player):
             type_print("You already have this idiot")
             pause()
             return shop(player)
+        if player["armour"] >= 4:
+            type_print(" You already have equal or better armour")
+            pause()
+            return shop(player)
         price = 40 if sale else 50
         if can_afford(player, price): 
-            
+            save_game(player)
             player["armour"] = max(player["armour"], 4)
             player["inventory"].append("Iron Armour")
             type_print(f"Your armour is now {player['armour']}")
@@ -99,6 +110,7 @@ def shop(player):
             return shop(player)
         price = 140 if sale else 150
         if can_afford(player, price): 
+            save_game(player)
             player["damage"] += 8
             pickup(player, "Katana")
             type_print(f"Your damage is now {player['damage']}")
@@ -111,6 +123,7 @@ def shop(player):
             return shop(player)
         price = 190 if sale else 200
         if can_afford(player, price):
+            save_game(player)
             player["armour"] += 6
             pickup(player, "Super Shield")
             type_print(f"Your armour is now {player['armour']}")
