@@ -58,6 +58,9 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             type_print(f"The {enemy_name} hits you as you flee, dealing {flee_damage} damage! You have {player['health']} health left.")
             if player["health"] <= 0:
                 break
+            if enemy_name in ("Gladiator", "Arena Champion"):
+                player["arena_wave"] = 0
+                type_print("You fled the arena! Your win streak is set to 0!")
             target = flee_to if flee_to is not None else next
             if target == "city":
                 return inside_city(player)
@@ -161,6 +164,10 @@ def enemy_drop(player, enemy_name):
         gold_found = random.randint(10, 20)
         player["gold"] += gold_found
         type_print(f"You got {gold_found} gold from that corpse!")
+    elif enemy_name == "Gladiator" and roll > 80 and "Gladiator's Sword" not in player["inventory"]:
+            player["damage"] += 4
+            pickup(player, "Gladiator's Sword")
+            type_print("You take the gladiators blade and hold it high above your head! (+4 dmg)")
         
 
 def boss_fight(player):

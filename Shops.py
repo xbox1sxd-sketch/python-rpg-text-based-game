@@ -71,6 +71,7 @@ def shop(player):
             if "Leather Armour" in player["inventory"]:
                 type_print("You already have this armour")
                 pause()
+                continue
             if player["armour"] >= 4:
                 type_print("You have better armour already numbskull")
                 pause()
@@ -86,6 +87,7 @@ def shop(player):
             if "Iron Armour" in player["inventory"]:
                 type_print("You already have this idiot")
                 pause()
+                continue
             if player["armour"] >= 4:
                 type_print(" You already have equal or better armour")
                 pause()
