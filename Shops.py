@@ -13,7 +13,8 @@ def can_afford(player, price):
         type_print("You don't have enough gold")
         pause()
         return False
-    
+
+#The shop. Sells you many goods, however they are on the cheaper side.
 def shop(player):
     from world import inside_city  # type: ignore
     clear()
@@ -135,6 +136,7 @@ def shop(player):
             pause()
 
 
+#The merchant. Sells you many higher quality goods.
 def merchant(player):
     from world import village  # type: ignore
     while True:
@@ -193,7 +195,7 @@ def merchant(player):
             pause()
 
 
-
+#Handles the selling of each weapon. Im sure this could be more optimized... gotta figure that out
 def sell_weapon(player):
     clear()
     type_print("Which weapon would you like to sell back?")
@@ -204,6 +206,7 @@ def sell_weapon(player):
     type_print("E. Sell Bandit's Bat (sells for 40g)")
     type_print("F. Sell Katana (sells for 75g)")
     type_print("G. Super Shield (sells for 100g)")
+    type_print("H. Gladiator's Sword (sells for 20g)")
     type_print("L. Leave")
     choice = input_type("> ").upper().strip()
     if choice == "A" and "Iron Dagger" in player["inventory"]:
@@ -222,10 +225,10 @@ def sell_weapon(player):
         player["gold"] += 30
         type_print("Sold war Axe for 30 gold. Your damage decreased.")
     elif choice == "D" and "Silver Scythe" in player["inventory"]:
-            player["inventory"].remove("Silver Scythe")
-            player["damage"] -= 2
-            player["gold"] += 10
-            type_print("Sold Silver Scythe for 10 gold. Your damage decreased.")
+        player["inventory"].remove("Silver Scythe")
+        player["damage"] -= 2
+        player["gold"] += 10
+        type_print("Sold Silver Scythe for 10 gold. Your damage decreased.")
     elif choice == "E" and "Bandit's Bat" in player["inventory"]:
         player["inventory"].remove("Bandit's Bat")
         player["damage"] -= 6
@@ -241,6 +244,11 @@ def sell_weapon(player):
         player["armour"] -= 6
         player["gold"] += 100
         type_print("Sold Super Shield for 100 gold. Your armour decreased.")
+    elif choice == "H" and "Gladiator's Sword" in player["inventory"]:
+        player["inventory"].remove("Gladiator's Sword")
+        player["damage"] -= 4
+        player["gold"] += 20
+        type_print("Sold Gladiator's Sword for 20 gold. Your damage decreased.")
     elif choice == "L":
         return
     else:

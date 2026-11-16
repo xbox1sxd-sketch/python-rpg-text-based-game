@@ -7,6 +7,7 @@ from shops import merchant, shop  # type: ignore
 from ui import clear, input_type, pause, type_print  # type: ignore
 
 
+#Where everything comes back to, the starting 3 places.
 def choose_a_path(player):
     save_game(player)
     path = input_type("\nNow, where would you like to go? A. A shimmering city. B. A dark forest. C. Through the swamp. D. Colosseum. I. Inventory P. Drink a health pot R. Rest(10g) ").upper().strip()
@@ -39,6 +40,7 @@ def choose_a_path(player):
         
         return choose_a_path(player)
 
+#Place where you can heal.. or get jumped lmao
 def campfire(player):
     if player["gold"] >= 10:
         if player["health"] >= player["max_health"]:
@@ -54,6 +56,7 @@ def campfire(player):
     pause()
     return choose_a_path(player)
 
+#Shimmering city the main area
 def shimmering_city(player):
     clear()
     type_print("You make your way down to the city... unfortunately you somehow get stopped by the guard for not having any ID.")
@@ -74,6 +77,7 @@ def shimmering_city(player):
         pause()
         return shimmering_city(player)
 
+#Dark forest where you can fight the bandits
 def dark_forest(player):
     clear()
     type_print("You wander into the dark forest..")
@@ -104,6 +108,7 @@ def dark_forest(player):
         pause()
         return choose_a_path(player)
 
+#Bandit camp, place of miniboss
 def bandit_camp(player):
     clear()
     if player.get("bandit_leader_dead"):
@@ -135,7 +140,7 @@ def bandit_camp(player):
         return bandit_camp(player)
                        
     
-
+#The witches place, was gonna make it a joke place but decided against that.
 def swamp(player):
     clear()
     encounter = random.randint(1, 10)
@@ -184,6 +189,7 @@ def swamp(player):
         clear()
         return graveyard(player)
 
+#Witch was too boring, so i added this, OH also did you notice the thief everywhere?
 def graveyard(player):
     clear()
     type_print("You step into the haunted graveyard. A chill runs down your spine...")
@@ -225,7 +231,8 @@ def graveyard(player):
         type_print("Please choose A, B, or C.")
         pause()
         return graveyard(player)
-    
+ 
+ #Inside of the shimmering city, leads to the dungeon and eventually 'the sealed one' ooooh   
 def inside_city(player):
     save_game(player)
     clear()
@@ -252,6 +259,7 @@ def inside_city(player):
         clear()
         return inside_city(player)
 
+#The tavern where you can eat and gamble
 def tavern(player):
     clear()
     type_print("You walk towards the tavern. You already smell the booze and meat.")
@@ -281,6 +289,7 @@ def tavern(player):
     pause()
     return tavern(player)
 
+#yea just a little place to get money.. or get robbed
 def wander_streets(player):
     clear()
     roll = random.randint(1, 10)
@@ -301,7 +310,7 @@ def wander_streets(player):
         pause()
         return inside_city(player)
 
-
+#Just a village, more options
 def village(player):
     save_game(player)
     clear()
@@ -326,7 +335,7 @@ def village(player):
         pause()
         return village(player)
     
-    
+# local who gives you the lore
 def local(player):
     clear()
     type_print("A thin man leans against a wall. He looks like he hasnt slept in a while...")
@@ -344,6 +353,7 @@ def local(player):
     pause()
     return village(player)
 
+#just a place full of enemies
 def far_underground(player):
     clear()
     type_print("The streets narrow.")
@@ -383,6 +393,7 @@ def far_underground(player):
         pause()
         return far_underground(player)
 
+#Enterence to the sealed one
 def sealed_gate(player):
     clear()
     if player["sealed_one_dead"]:
@@ -407,7 +418,8 @@ def sealed_gate(player):
         type_print("Please choose A, or B")
         pause()
         return sealed_gate(player)
-    
+
+# Colosseum where you fight your way up to a mini-boss
 def colosseum(player):
     clear()
     wave = player.get("arena_wave", 0)
@@ -442,7 +454,7 @@ def colosseum(player):
         pause()
         return colosseum(player)
         
-    
+#The end of the game.
 def sealed_ending(player):
     clear()
     type_print("The sealed one falls. The lanterns go out one by one.")

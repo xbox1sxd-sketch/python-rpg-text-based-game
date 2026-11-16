@@ -4,11 +4,12 @@ from items import pickup, use_potion  # type: ignore
 from ui import clear, input_type, pause, type_print  # type: ignore
 
 
+#calculates enemies damage including armour
 def calc_enemy_damage(player, enemy_damage):
     base = random.randint(enemy_damage -2, enemy_damage + 2)
     return max(1, base - player.get("armour", 0))
 
-
+#gets the enemy and its stats, its drops, if you or it dies, and where youll end up if you win
 def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", flee_to = None):
     from world import (  # type: ignore
         bandit_camp,
@@ -127,6 +128,12 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
             type_print("The witch dies. The fog lifts off the swamp, revealing a massive GraveYard!")
             pause()
             return swamp(player)
+        if enemy_name == "Gladiator" and random.randint(1, 10) <= 4:
+            if "Gladiator's Sword" not in player["inventory"]:
+                player["damage"] += 4
+                pickup(player, "Gladiator's Sword")
+                type_print("You take the Gladiator's Sword and hold it high! (+4 dmg)")
+                pause()
         
         if next == "city":
             return inside_city(player)
@@ -154,7 +161,7 @@ def combat(player, enemy_health, enemy_damage, enemy_name, next = "crossroads", 
         pause()
         return choose_a_path(player)
     
-
+#Calculates how much gold you get if you kill an enemy, also health potions.
 def enemy_drop(player, enemy_name):
     roll = random.randint(1, 100)
     if roll <= 30:
@@ -164,12 +171,9 @@ def enemy_drop(player, enemy_name):
         gold_found = random.randint(10, 20)
         player["gold"] += gold_found
         type_print(f"You got {gold_found} gold from that corpse!")
-    elif enemy_name == "Gladiator" and roll > 80 and "Gladiator's Sword" not in player["inventory"]:
-            player["damage"] += 4
-            pickup(player, "Gladiator's Sword")
-            type_print("You take the gladiators blade and hold it high above your head! (+4 dmg)")
-        
 
+        
+#Handles the warden boss fight
 def boss_fight(player):
     if player["warden_dead"] == True:
         type_print("The gold door stands silent. Nothing is behind it now.")
@@ -180,6 +184,7 @@ def boss_fight(player):
     type_print("The warden RISES")
     return combat(player, 100, 12, "Warden", "Dungeon")      
 
+#Makes the dungeon where you can fight a bunch of enemies
 def dungeon(player):
     from world import inside_city, village  # type: ignore
     clear()

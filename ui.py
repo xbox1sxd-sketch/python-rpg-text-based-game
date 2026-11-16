@@ -19,7 +19,8 @@ try:
     import msvcrt
 except ImportError:
     msvcrt = None 
-    
+
+#Ai wrote this entire script basically as well
 def type_print(text, delay = 0.03):
     for i, letter in enumerate(text):
         if msvcrt is not None and msvcrt.kbhit():

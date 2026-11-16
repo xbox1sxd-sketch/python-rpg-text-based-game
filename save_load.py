@@ -8,6 +8,7 @@ def save_game(player):
         json.dump(player, f)
         
 
+#Used ai to help build this entire script pretty much
 def load_game():
     if os.path.exists(SAVE_FILE):
         with open(SAVE_FILE, "r") as f:

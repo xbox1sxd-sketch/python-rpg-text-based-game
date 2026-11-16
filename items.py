@@ -3,6 +3,7 @@ import random
 from ui import clear, input_type, type_print  # type: ignore
 
 
+#Shows you whats in your inventory + your stats
 def show_inventory(player):
     type_print("\n --- INVENTORY ---")
     if player["inventory"] == []:
@@ -17,6 +18,7 @@ def show_inventory(player):
     input_type("Press Enter to continue")
     clear()
 
+#Calculates if you can use a potion or not
 def use_potion(player):
     if "Health Potion" not in player["inventory"]:
         type_print("You dig around in your pack... No potions. :(")
@@ -32,11 +34,13 @@ def use_potion(player):
     type_print(f"You heal {player['health'] - old_health} health")
     type_print(f"Health: {player['health']}/{player['max_health']}")
     return True    
-    
+
+#Handles the pickup of all items
 def pickup(player, item):
     player["inventory"].append(item)
     type_print("you got a " + item + "!")
-    
+
+#Silver scythe pickup
 def silver_scythe(player):
     if "Silver Scythe" in player["inventory"]:
         return False
@@ -45,6 +49,7 @@ def silver_scythe(player):
     type_print(f"Your damage now is {player['damage']}")
     return True
 
+# Handles the chest opening and the chances of what you get
 def open_chest(player):
     type_print("you open the chest")    
     gold_found = random.randint(5, 20)
