@@ -4,7 +4,7 @@ About
 This is a text-based adventure RPG made with Python. Explore different locations, encounter enemies, fight bosses, collect items, and make choices that affect your adventure. Discover hidden areas, manage your health, use potions, and find equipment to help you survive challenging encounters.
 
 How to Play
-Download the .exe from releases (recommended) or use this link: https://trinket.strivemath.org/python3/ec26e2495e1c (will not have the best effect).
+Download the .exe from releases (recommended) or use this link: https://trinket.strivemath.org/python3/c39b556d6a2f (will not have the best effect).
 
 1. Start the game.
 2. Enter your character's name.
@@ -14,7 +14,7 @@ Download the .exe from releases (recommended) or use this link: https://trinket.
 6. Try to survive and complete your adventure!
 
 How I Built It
-I built this game using Python in Visual Studio Code. I organized the game using functions for different locations and events. I used loops and conditional statements to handle player choices and keep the game running. Dictionaries and variables manage player information, including health, damage, and inventory. I also used Python's random, os, and time modules for random events, screen clearing, and text effects.
+I built this game using Python in Visual Studio Code. I organized the game using functions for different locations and events. I used loops and conditional statements to handle player choices and keep the game running. Dictionaries and variables manage player information, including health, damage, and inventory. I also used Python's random, os, and time modules for random events, screen clearing, and text effects. Along with that this week I also split the game into multiple different files to make it easier to code and find functions.
 
 Built With
 - Python
