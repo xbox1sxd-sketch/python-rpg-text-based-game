@@ -7,8 +7,10 @@ type_print("\nI hope you enjoy!\n\n")
     
 
 def get_name():
-    player_name = input_type("What would you like to be called Adventurer? ").strip()
-    if len(player_name) < 4:
+    while True:
+        player_name = input_type("What would you like to be called Adventurer? ").strip()
+        if len(player_name) < 4:
+            break
         type_print("Name must be atleast 4 characters :)")
         clear()
         return get_name()
@@ -20,24 +22,22 @@ def get_name():
 def play_beginning():
     print("\n")
     type_print("Choose your difficulty.")
-    difficulty = input_type("Enter one. Easy, Medium, Or Hard? ").lower().strip()
-    if difficulty == "medium":
-        type_print("Indeed the path you chosen is a simple one.")
-        health = 150
-        damage = 7
-    elif difficulty == "easy":
-        type_print("\nIndeed the path you have chosen is a forgiving one.")
-        health = 200
-        damage = 10
-    elif difficulty == "hard":
-        type_print("Indeed the path you have chosen is a hard one.")
-        health = 75
-        damage = 5
-    else:
-        clear()
-        type_print("Please ENTER a proper difficulty.")
-        return play_beginning()
-    input_type("\nPress ENTER to continue")
+    while True:
+        difficulty = input_type("Enter one. Easy, Medium, Or Hard? ").lower().strip()
+        if difficulty == "medium":
+            type_print("Indeed the path you chosen is a simple one.")
+            health, damage = 150, 7
+        elif difficulty == "easy":
+            type_print("\nIndeed the path you have chosen is a forgiving one.")
+            health, damage = 200, 10
+            break
+        elif difficulty == "hard":
+            type_print("Indeed the path you have chosen is a hard one.")
+            health, damage = 75, 5
+            break
+        else:
+            type_print("Please ENTER a proper difficulty.")
+    pause()
     clear()
     return health, damage
 
