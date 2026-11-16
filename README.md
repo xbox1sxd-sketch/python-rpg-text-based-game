@@ -4,7 +4,7 @@ About
 This is a text-based adventure RPG made with Python. Explore different locations, encounter enemies, fight bosses, collect items, and make choices that affect your adventure. Discover hidden areas, manage your health, use potions, and find equipment to help you survive challenging encounters.
 
 How to Play
-Download the .exe from releases (recommended) or use this link: https://trinket.strivemath.org/python3/a429c52bf52b (will not have the best effect).
+Download the .exe from releases (recommended) or use this link: https://trinket.strivemath.org/python3/c39b556d6a2f (will not have the best effect).
 
 1. Start the game.
 2. Enter your character's name.
